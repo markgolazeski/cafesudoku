@@ -16,13 +16,14 @@ public class CafeSudokuGUI {
 		
 		JPanel puzzlePanel = new JPanel();
 		
-		//puzzlePanel.setBorder(new Border());
+		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 20, 12));
 		puzzlePanel.setLayout(new GridLayout(9,9));
 		
 		for(int i = 0; i < 9; ++i){
 			for(int j=0; j<9; ++j){
 				//% commands are being used for setting up borders
 				JButton a = new JButton(new Integer(i%3).toString() + ", " + new Integer(j%3).toString());
+				//a.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 				puzzlePanel.add(a);
 				_numComponents.add(a);
 			}

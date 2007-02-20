@@ -30,6 +30,7 @@ public class CafeSudokuGUI {
 		}
 		
 		
+		
 		mainFrame.add(puzzlePanel);
 		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -7,11 +7,11 @@ import javax.swing.border.Border;
 
 public class CafeSudokuGUI {
 
-	private static Vector<JButton> _numComponents;
+	private static Vector<JComboBox> _numComponents;
 	
 	public CafeSudokuGUI(){
 		
-		_numComponents = new Vector<JButton>();
+		_numComponents = new Vector<JComboBox>();
 		JFrame mainFrame = new JFrame("Café Sudoku");
 		
 		JPanel puzzlePanel = new JPanel();
@@ -19,15 +19,32 @@ public class CafeSudokuGUI {
 		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 20, 12));
 		puzzlePanel.setLayout(new GridLayout(9,9));
 		
+		Vector<Integer> possValues = new Vector<Integer>();
+		
+		for (int i=0; i<10; ++i){
+			possValues.add(i);
+		}
+		
 		for(int i = 0; i < 9; ++i){
 			for(int j=0; j<9; ++j){
 				//% commands are being used for setting up borders
-				JButton a = new JButton(new Integer(i%3).toString() + ", " + new Integer(j%3).toString());
+				JComboBox a = new JComboBox(possValues);
 				//a.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 				puzzlePanel.add(a);
 				_numComponents.add(a);
 			}
-		}
+		} 
+		
+		/*
+		for(int i = 0; i < 9; ++i){
+			for(int j=0; j<9; ++j){
+				//% commands are being used for setting up borders
+				JTextField a = new JTextField(new Integer(i%3).toString() + ", " + new Integer(j%3).toString());
+				//a.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+				puzzlePanel.add(a);
+				_numComponents.add(a);
+			}
+		}*/
 		
 		
 		
@@ -40,7 +57,8 @@ public class CafeSudokuGUI {
 	
 	private void updateFields(int cellNumber, int val){
 		//Set requested button value to value being passed in.
-		_numComponents.get(cellNumber).setText(new Integer(val).toString());
+		//_numComponents.get(cellNumber).setText(new Integer(val).toString());
+		_numComponents.get(cellNumber).setSelectedIndex(val);
 	}
 	
 	public void syncPuzzleGUI(SudokuPuzzle puzzle){

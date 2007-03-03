@@ -1,5 +1,6 @@
 package project;
 import java.awt.*;
+import java.io.*;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -42,7 +43,7 @@ public class CafeSudokuGUI {
 					dwnBorder = 12;
 				}
 				else{
-					System.out.println("DownBorder Changed to 0");
+					//System.out.println("DownBorder Changed to 0");
 					dwnBorder = 0;
 				}
 					
@@ -76,8 +77,9 @@ public class CafeSudokuGUI {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
+        mainFrame.setResizable(false);
         
-        //handleFile();
+       handleFile();
 	}
 	
 	private void updateFields(int cellNumber, int val){
@@ -100,7 +102,16 @@ public class CafeSudokuGUI {
 		final JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(fileDialog);
 		if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
-			System.out.println("file chosen");
+			System.out.println("File chosen");
+			File chosenFile = fc.getSelectedFile();
+			System.out.println(chosenFile.getAbsolutePath());
+			if (!chosenFile.canRead());
+			{
+				//Throw can't read error
+			}
+				
+			
+			
 		}
 		else{
 			System.out.println("File not chosen");

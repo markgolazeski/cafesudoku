@@ -40,20 +40,16 @@ public class SudokuPuzzle {
 				//add cell number (length of all puzzle cells - 1)
 				//to appropiate row/column/grid vectors
 				Integer number = this._allPuzzleCells.size() - 1;
-				if (i <1){
-					System.out.println("Number= " + number);
-					System.out.println("i= " + i);
-				}
-				
-				System.out.println("Adding " + number + " to " + i);
+
+				//System.out.println("Adding " + number + " to " + i);
 				this._rows.get(i).add(number);
 				this._cols.get(j).add(number);
 				this._grids.get(a.get_gridnum()).add(number);
 			}
 		}
-		System.out.println("rows: " + this._rows.toString());
-		System.out.println("cols: " + this._cols.toString());
-		System.out.println("grids: " + this._grids.toString());
+		//System.out.println("rows: " + this._rows.toString());
+		//System.out.println("cols: " + this._cols.toString());
+		//System.out.println("grids: " + this._grids.toString());
 		
 		/*for (int i=0; i<9;++i){
 			System.out.println("row(0),spot(" + i +"): " + this._rows.elementAt(0).get(i).toString());

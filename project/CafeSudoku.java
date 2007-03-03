@@ -11,8 +11,8 @@ public class CafeSudoku {
 		System.out.println("Printing");
 
 		SudokuPuzzle _currPuzzle = new SudokuPuzzle();
-		//CafeSudokuGUI _mainGUI = new CafeSudokuGUI();
+		CafeSudokuGUI _mainGUI = new CafeSudokuGUI();
 
-		//_mainGUI.syncPuzzleGUI(_currPuzzle);
+		_mainGUI.syncPuzzleGUI(_currPuzzle);
 	}
 }

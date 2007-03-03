@@ -27,7 +27,7 @@ public class Cell {
 		this._colnum = col;
 		//Formula to get grid number from row and col
 		this._gridnum = (3 * ((row/*-1*/) / 3) + ((col/*-1*/) / 3)); 
-		System.out.println("row: " + this._rownum + " col: " + this._colnum + " grid: " + this._gridnum);
+		//System.out.println("row: " + this._rownum + " col: " + this._colnum + " grid: " + this._gridnum);
 	}
 	
 	public void initializePossValues(){

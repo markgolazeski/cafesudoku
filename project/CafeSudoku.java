@@ -14,9 +14,5 @@ public class CafeSudoku {
 		CafeSudokuGUI _mainGUI = new CafeSudokuGUI();
 
 		_mainGUI.syncPuzzleGUI(_currPuzzle);
-
 	}
-	
-
-
 }

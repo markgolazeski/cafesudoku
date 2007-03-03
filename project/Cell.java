@@ -1,12 +1,15 @@
 package project;
 import java.util.Vector;
 
+import javax.swing.JComboBox;
+
 
 public class Cell {
 	
 	private Integer _rownum; //Row Cell belongs to
 	private Integer _colnum; //Column Cell belongs to
 	private Integer _gridnum; //Grid Cell belongs to
+	private static JComboBox _dropDownList;
 	
 	private Integer _finalval; //Final value for Cell
 	
@@ -14,8 +17,12 @@ public class Cell {
 	
 	
 	public Cell(){
-		System.out.println("Creating Cell()");
+		//System.out.println("Creating Cell()");
 		_possvalues = new Vector<Integer>();
+		for(int i=0;i<10;++i)
+		{
+			_possvalues.add(i);
+		}
 		
 	}
 	

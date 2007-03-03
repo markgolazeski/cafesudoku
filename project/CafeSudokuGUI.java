@@ -77,7 +77,7 @@ public class CafeSudokuGUI {
         mainFrame.pack();
         mainFrame.setVisible(true);
         
-        handleFile();
+        //handleFile();
 	}
 	
 	private void updateFields(int cellNumber, int val){
@@ -88,7 +88,7 @@ public class CafeSudokuGUI {
 	
 	public void syncPuzzleGUI(SudokuPuzzle puzzle){
 		for(int i = 0; i<81; ++i){
-			this.updateFields(i, puzzle.get_puzzleCells(i).get_finalval());
+			this.updateFields(i, puzzle.get_puzzleCell(i).get_finalval());
 			
 		}
 	}

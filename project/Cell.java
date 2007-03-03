@@ -18,10 +18,23 @@ public class Cell {
 	
 	public Cell(){
 		//System.out.println("Creating Cell()");
-		_possvalues = new Vector<Integer>();
+		initializePossValues();
+	}
+	
+	public Cell(Integer row, Integer col){
+		initializePossValues();
+		this._rownum = row;
+		this._colnum = col;
+		//Formula to get grid number from row and col
+		this._gridnum = 1 + (3 * ((row-1) / 3) + ((col-1) / 3)); 
+		System.out.println("row: " + this._rownum + " col: " + this._colnum + " grid: " + this._gridnum);
+	}
+	
+	public void initializePossValues(){
+		this._possvalues = new Vector<Integer>();
 		for(int i=0;i<10;++i)
 		{
-			_possvalues.add(i);
+			this._possvalues.add(i);
 		}
 		
 	}

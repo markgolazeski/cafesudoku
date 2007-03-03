@@ -15,4 +15,8 @@ public class CafeSudoku {
 
 		_mainGUI.syncPuzzleGUI(_currPuzzle);
 	}
+	
+	public SudokuPuzzle getCurrentPuzzle(){
+		return this._currentPuzzle;
+	}
 }

@@ -6,7 +6,8 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class CafeSudokuGUI {
+
+public class CafeSudokuGUI extends CafeSudoku{
 
 	private static Vector<JComboBox> _numComponents;
 	//private static Vector<JButton> _numButtons;
@@ -107,14 +108,20 @@ public class CafeSudokuGUI {
 			System.out.println(chosenFile.getAbsolutePath());
 			if (!chosenFile.canRead());
 			{
-				//Throw can't read error
+				//Throw can't read error, return
 			}
-				
+			
+			//Read in File
+			this.readFile();
 			
 			
 		}
 		else{
 			System.out.println("File not chosen");
 		}
+	}
+	
+	private void readFile(){
+		
 	}
 }

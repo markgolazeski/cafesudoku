@@ -56,6 +56,13 @@ public class SudokuPuzzle {
 		}*/
 	}
 	
+	public boolean isFinished(Integer x){
+		if(x < this._allPuzzleCells.size()){
+			return false;
+		}
+		return true;
+	}
+	
 	//Checks if a puzzle has valid entries
 	//TODO: Highlight bad value(s)
 	public boolean isValid(){
@@ -95,6 +102,41 @@ public class SudokuPuzzle {
 		}
 		return true;
 	}
+	
+	//General solving
+	public void solve(){
+		if (!this.isValid()){
+			System.out.println("Can't start Solving:");
+			System.out.println("There are conflicts in the starting puzzle.");
+			return;
+		}
+		Integer startFilled = getFinishedCells();
+		if(isFinished(startFilled)){
+			System.out.println("Can't start Solving:");
+			System.out.println("This Puzzle is already Filled in.");
+			return;
+		}
+		System.out.println("The Puzzle is starting with " + startFilled + " cells filled in.");
+		//Puzzle is set up ok and 
+		runStage1();
+		
+		
+	}
+	
+	public Integer getFinishedCells(){
+		Integer count = 0;
+		for(int i = 0; i< this._allPuzzleCells.size(); ++i){
+			if(this._allPuzzleCells.get(i).get_finalval() > 0){
+				count = count + 1;
+			}
+		}
+		return count;
+	}
+	
+	public void runStage1(){
+		
+	}
+	
 
 	public Cell get_puzzleCell(int i) {
 		return _allPuzzleCells.get(i);

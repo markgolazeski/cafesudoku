@@ -3,20 +3,22 @@ package project;
 
 public class CafeSudoku {
 
-	CafeSudokuGUI _mainGUI;
-	SudokuPuzzle _currentPuzzle;
+	protected CafeSudokuGUI _mainGUI;
+	protected SudokuPuzzle _currPuzzle;
 	
 	public static void main(String[] args) {
-	
+		
+		//SudokuPuzzle puzzle = new SudokuPuzzle();
 		System.out.println("Printing");
 
-		SudokuPuzzle _currPuzzle = new SudokuPuzzle();
+		//GUI creates initial SudokuPuzzle
 		CafeSudokuGUI _mainGUI = new CafeSudokuGUI();
+		//_mainGUI.setCurrentPuzzle(puzzle);
 
-		_mainGUI.syncPuzzleGUI(_currPuzzle);
+		//_mainGUI.syncPuzzleGUI(puzzle);
 	}
 	
 	public SudokuPuzzle getCurrentPuzzle(){
-		return this._currentPuzzle;
+		return this._currPuzzle;
 	}
 }

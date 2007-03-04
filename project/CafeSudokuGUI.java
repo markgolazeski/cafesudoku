@@ -7,12 +7,16 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 
-public class CafeSudokuGUI extends CafeSudoku{
+public class CafeSudokuGUI{
 
 	private static Vector<JComboBox> _numComponents;
 	//private static Vector<JButton> _numButtons;
 	
+	private SudokuPuzzle _currentPuzzle;
+	
 	public CafeSudokuGUI(){
+		
+		_currentPuzzle = new SudokuPuzzle();
 		
 		_numComponents = new Vector<JComboBox>();
 		//_numButtons = new Vector<JButton>();
@@ -28,7 +32,16 @@ public class CafeSudokuGUI extends CafeSudoku{
 		for (int i=0; i<10; ++i){
 			possValues.add(i);
 		}
-		///*
+		
+		//TODO: Add Cell's JComboBox to GUI here, check Cells row and column for border
+		for (int i=0; i < this._currentPuzzle.get_numCells(); ++i){
+			Cell a = this._currentPuzzle.get_puzzleCell(i);
+			
+			//TODO: Put in border (below) stuff here
+			
+			puzzlePanel.add(a.get_comboBox());
+		}
+		/*
 		for(int i = 0; i < 9; ++i){
 			for(int j=0; j<9; ++j){
 				Integer rghtBorder = 0;
@@ -49,6 +62,7 @@ public class CafeSudokuGUI extends CafeSudoku{
 				}
 					
 				//% commands are being used for setting up borders
+				
 				JComboBox a = new JComboBox(possValues);
 				//a.setBorder(BorderFactory.createEmptyBorder(0, 0, dwnBorder, rghtBorder));
 				
@@ -57,7 +71,7 @@ public class CafeSudokuGUI extends CafeSudoku{
 				puzzlePanel.add(a);
 				_numComponents.add(a);
 			}
-		} //*/
+		} */
 		
 		/*
 		for(int i = 0; i < 9; ++i){
@@ -96,6 +110,7 @@ public class CafeSudokuGUI extends CafeSudoku{
 		}
 	}
 	
+	
 	private void handleFile(){
 		
 		JDialog fileDialog = new JDialog();
@@ -105,14 +120,14 @@ public class CafeSudokuGUI extends CafeSudoku{
 		if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
 			System.out.println("File chosen");
 			File chosenFile = fc.getSelectedFile();
-			System.out.println(chosenFile.getAbsolutePath());
 			if (!chosenFile.canRead());
 			{
 				//Throw can't read error, return
 			}
-			
+
+			System.out.println(chosenFile.getAbsolutePath());
 			//Read in File
-			this.readFile();
+			this.readFile(chosenFile.getAbsolutePath());
 			
 			
 		}
@@ -121,7 +136,18 @@ public class CafeSudokuGUI extends CafeSudoku{
 		}
 	}
 	
-	private void readFile(){
+	private void readFile(String filename){
+		try{
+			FileReader fin = new FileReader(filename);
+			BufferedReader in = new BufferedReader(fin);
+			while (in.ready()){
+				String text = in.readLine();
+				System.out.println(text);
+			}
+		}
+		catch (Exception e){
+			System.err.print(e);
+		}
 		
 	}
 }

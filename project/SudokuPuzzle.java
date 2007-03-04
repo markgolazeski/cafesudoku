@@ -59,4 +59,8 @@ public class SudokuPuzzle {
 	public Cell get_puzzleCell(int i) {
 		return _allPuzzleCells.get(i);
 	}
+	
+	public int get_numCells(){
+		return _allPuzzleCells.size();
+	}
 }

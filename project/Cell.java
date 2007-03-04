@@ -9,7 +9,7 @@ public class Cell {
 	private Integer _rownum; //Row Cell belongs to
 	private Integer _colnum; //Column Cell belongs to
 	private Integer _gridnum; //Grid Cell belongs to
-	private static JComboBox _dropDownList;
+	private JComboBox _dropDownList;
 	
 	private Integer _finalval; //Final value for Cell
 	
@@ -36,6 +36,7 @@ public class Cell {
 		{
 			this._possvalues.add(i);
 		}
+		_dropDownList = new JComboBox(this._possvalues);
 		
 	}
 	
@@ -72,6 +73,10 @@ public class Cell {
 		this._possvalues.add(x);
 		
 		this._finalval = x;
+	}
+	
+	public JComboBox get_comboBox(){
+		return _dropDownList;
 	}
 	
 }

@@ -140,9 +140,27 @@ public class CafeSudokuGUI{
 		try{
 			FileReader fin = new FileReader(filename);
 			BufferedReader in = new BufferedReader(fin);
-			while (in.ready()){
+			
+			int currentRow = 0;
+			
+			while (in.ready() && currentRow < 9){
 				String text = in.readLine();
+
 				System.out.println(text);
+				String[] splitText = text.split(" ");
+				for (int i=0; i < splitText.length; ++i){
+					System.out.println(splitText[i]);
+					
+				}
+				try{
+
+				}
+				catch(Exception e){
+					//Not an Integer
+				}
+				
+				//Increment current row
+				currentRow = currentRow + 1;
 			}
 		}
 		catch (Exception e){

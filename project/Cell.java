@@ -36,7 +36,17 @@ public class Cell {
 		{
 			this._possvalues.add(i);
 		}
-		_dropDownList = new JComboBox(this._possvalues);
+		
+		/*	For some reason it doesn't like using possvalues for
+			ComboBox choices.
+			So I just set up a new Vector of Integers and it works fine
+		*/
+		
+		Vector<Integer> choices = new Vector<Integer>();
+		for (int i=0; i<10;++i){
+			choices.add(i);
+		}
+		_dropDownList = new JComboBox(choices);
 		
 	}
 	

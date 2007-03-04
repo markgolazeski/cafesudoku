@@ -47,6 +47,9 @@ public class Cell {
 			choices.add(i);
 		}
 		_dropDownList = new JComboBox(choices);
+		this._dropDownList.removeItem(0);
+		this._dropDownList.insertItemAt(new String("_"),0);
+		this._dropDownList.setSelectedIndex(0);
 		
 	}
 	

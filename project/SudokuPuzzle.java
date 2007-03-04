@@ -55,6 +55,46 @@ public class SudokuPuzzle {
 			System.out.println("row(0),spot(" + i +"): " + this._rows.elementAt(0).get(i).toString());
 		}*/
 	}
+	
+	//Checks if a puzzle has valid entries
+	//TODO: Highlight bad value(s)
+	public boolean isValid(){
+		Integer count = 0;
+		Integer compareValue = 0;
+		Vector<Integer> currentVector = new Vector<Integer>();
+		//Upto 9 times check rows
+		//Upto 18 times check cols
+		//Upto 27 times check grids
+		for (int i=0; i<27; ++i){
+			if (i < 9){
+				currentVector = this._rows.get(i);
+			}
+			else if (i < 18){
+				System.out.println("Less than 18: " + i % 9);
+				currentVector = this._cols.get(i % 9);
+			}
+			else{
+				currentVector = this._grids.get(i % 9);
+			}
+			for (int j=1; j<10; ++j){
+				//1 to 9, since those are the values we care about
+				count = 0;				
+				for (int k=0; k<9; ++k){
+					compareValue = this._allPuzzleCells.get(currentVector.get(k/*j*/)).get_finalval();
+					//System.out.println("compare: " + compareValue + " k: " + j);
+					if(compareValue == j){
+						count = count + 1;
+					}
+					//Duplicate in the row
+					if(count > 1){
+						return false;
+					}
+				}
+				System.out.println("count: " + count);
+			}
+		}
+		return true;
+	}
 
 	public Cell get_puzzleCell(int i) {
 		return _allPuzzleCells.get(i);

@@ -66,37 +66,6 @@ public class CafeSudokuGUI{
 				puzzlePanel.add(Box.createRigidArea(new Dimension(1,1)));
 			}
 		}
-		/*
-		for(int i = 0; i < 9; ++i){
-			for(int j=0; j<9; ++j){
-				Integer rghtBorder = 0;
-				Integer dwnBorder = 0;
-				
-				if (j % 3 == 2){ //Need to put in right border
-					rghtBorder = 12;
-				}
-				else{
-					rghtBorder = 0;
-				}
-				if (i % 3 == 2){//Need to put in bottum border
-					dwnBorder = 12;
-				}
-				else{
-					//System.out.println("DownBorder Changed to 0");
-					dwnBorder = 0;
-				}
-					
-				//% commands are being used for setting up borders
-				
-				JComboBox a = new JComboBox(possValues);
-				//a.setBorder(BorderFactory.createEmptyBorder(0, 0, dwnBorder, rghtBorder));
-				
-				//if()
-				
-				puzzlePanel.add(a);
-				_numComponents.add(a);
-			}
-		} */
 		
 		/*
 		for(int i = 0; i < 9; ++i){
@@ -133,6 +102,10 @@ public class CafeSudokuGUI{
 			this.updateFields(i, puzzle.get_puzzleCell(i).get_finalval());
 			
 		}
+	}
+	
+	public SudokuPuzzle get_currentPuzzle(){
+		return _currentPuzzle;
 	}
 	
 	

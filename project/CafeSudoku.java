@@ -13,7 +13,7 @@ public class CafeSudoku {
 
 		//GUI creates initial SudokuPuzzle
 		CafeSudokuGUI _mainGUI = new CafeSudokuGUI();
-		System.out.println(_mainGUI.get_currentPuzzle().isValid());
+		System.out.println("Starts Valid? " + _mainGUI.get_currentPuzzle().isValid());
 
 		//_mainGUI.syncPuzzleGUI(puzzle);
 	}

@@ -70,7 +70,7 @@ public class SudokuPuzzle {
 				currentVector = this._rows.get(i);
 			}
 			else if (i < 18){
-				System.out.println("Less than 18: " + i % 9);
+				//System.out.println("Less than 18: " + i % 9);
 				currentVector = this._cols.get(i % 9);
 			}
 			else{
@@ -80,7 +80,7 @@ public class SudokuPuzzle {
 				//1 to 9, since those are the values we care about
 				count = 0;				
 				for (int k=0; k<9; ++k){
-					compareValue = this._allPuzzleCells.get(currentVector.get(k/*j*/)).get_finalval();
+					compareValue = this._allPuzzleCells.get(currentVector.get(k)).get_finalval();
 					//System.out.println("compare: " + compareValue + " k: " + j);
 					if(compareValue == j){
 						count = count + 1;
@@ -90,7 +90,7 @@ public class SudokuPuzzle {
 						return false;
 					}
 				}
-				System.out.println("count: " + count);
+				//System.out.println("count: " + count);
 			}
 		}
 		return true;

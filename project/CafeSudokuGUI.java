@@ -25,7 +25,7 @@ public class CafeSudokuGUI{
 		JPanel puzzlePanel = new JPanel();
 		
 		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 17, 12));
-		puzzlePanel.setLayout(new GridLayout(9,9));
+		puzzlePanel.setLayout(new GridLayout(9,9,6,6));
 		
 		Vector<Integer> possValues = new Vector<Integer>();
 		
@@ -38,8 +38,33 @@ public class CafeSudokuGUI{
 			Cell a = this._currentPuzzle.get_puzzleCell(i);
 			
 			//TODO: Put in border (below) stuff here
+			Integer rghtBorder = 0;
+			Integer dwnBorder = 0;
+			
+			Integer row = this._currentPuzzle.get_puzzleCell(i).get_rownum();
+			Integer col = this._currentPuzzle.get_puzzleCell(i).get_colnum();
+			
+			
+			if (col % 3 == 2){
+				rghtBorder = 12;
+			}
+			else{
+				rghtBorder = 0;
+			}
+			if (row % 3 == 2){
+				dwnBorder = 12;
+			}
+			else{
+				dwnBorder = 0;
+			}
 			
 			puzzlePanel.add(a.get_comboBox());
+			/*if (col % 3 == 2 && row % 3 == 2){
+				puzzlePanel.add(Box.createVerticalStrut(30));
+			}*/
+			if (col % 3 == 2 && col < 7){
+				puzzlePanel.add(Box.createRigidArea(new Dimension(1,1)));
+			}
 		}
 		/*
 		for(int i = 0; i < 9; ++i){

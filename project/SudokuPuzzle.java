@@ -66,6 +66,7 @@ public class SudokuPuzzle {
 	//Checks if a puzzle has valid entries
 	//TODO: Highlight bad value(s)
 	public boolean isValid(){
+		String inCurrently = "";
 		Integer count = 0;
 		Integer compareValue = 0;
 		Vector<Integer> currentVector = new Vector<Integer>();
@@ -75,13 +76,16 @@ public class SudokuPuzzle {
 		for (int i=0; i<27; ++i){
 			if (i < 9){
 				currentVector = this._rows.get(i);
+				inCurrently = "row";
 			}
 			else if (i < 18){
 				//System.out.println("Less than 18: " + i % 9);
 				currentVector = this._cols.get(i % 9);
+				inCurrently = "column";
 			}
 			else{
 				currentVector = this._grids.get(i % 9);
+				inCurrently = "grid";
 			}
 			for (int j=1; j<10; ++j){
 				//1 to 9, since those are the values we care about
@@ -94,6 +98,7 @@ public class SudokuPuzzle {
 					}
 					//Duplicate in the row
 					if(count > 1){
+						System.out.println("There is a conflict in " + inCurrently + " " + (i%9 + 1) + ".");
 						return false;
 					}
 				}
@@ -117,7 +122,9 @@ public class SudokuPuzzle {
 			return;
 		}
 		System.out.println("The Puzzle is starting with " + startFilled + " cells filled in.");
-		//Puzzle is set up ok and 
+		//Puzzle is set up ok and not full
+		//Begin solving with stage 1
+		//TODO: set up booleans for subsequent stages and 
 		runStage1();
 		
 		

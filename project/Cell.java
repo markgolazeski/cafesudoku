@@ -50,6 +50,10 @@ public class Cell {
 		
 	}
 	
+	public void update_comboBoxSelected(Integer x){
+		this._dropDownList.setSelectedIndex(x);
+	}
+	
 	public Integer get_colnum() {
 		return _colnum;
 	}

@@ -142,18 +142,26 @@ public class CafeSudokuGUI{
 			BufferedReader in = new BufferedReader(fin);
 			
 			int currentRow = 0;
+			Integer currentValue;
 			
 			while (in.ready() && currentRow < 9){
 				String text = in.readLine();
 
-				System.out.println(text);
-				String[] splitText = text.split(" ");
-				for (int i=0; i < splitText.length; ++i){
-					System.out.println(splitText[i]);
-					
-				}
+				//System.out.println(text);
 				try{
-
+					String[] splitText = text.split(" ");
+					for (int i=0; i < splitText.length; ++i){
+						System.out.println(splitText[i]);
+						if (splitText[i] == "_"){
+							System.out.println("Setting CurrentValue to 0");
+							currentValue = 0;
+						}
+						else{
+							currentValue = Integer.parseInt(splitText[i]);
+						}
+						this._currentPuzzle.get_puzzleCell((currentRow*9 + i)).set_finalval(currentValue);
+						this._currentPuzzle.get_puzzleCell((currentRow*9 + i)).update_comboBoxSelected(currentValue);
+					}
 				}
 				catch(Exception e){
 					//Not an Integer

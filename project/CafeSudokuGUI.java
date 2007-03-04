@@ -151,9 +151,10 @@ public class CafeSudokuGUI{
 				try{
 					String[] splitText = text.split(" ");
 					for (int i=0; i < splitText.length; ++i){
-						System.out.println(splitText[i]);
-						if (splitText[i] == "_"){
-							System.out.println("Setting CurrentValue to 0");
+						//System.out.println(splitText[i]);
+						//_ official way to represent 0 in file
+						if (splitText[i].equals("_")){
+							//System.out.println("Setting CurrentValue to 0");
 							currentValue = 0;
 						}
 						else{

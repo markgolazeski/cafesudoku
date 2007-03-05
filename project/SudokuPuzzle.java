@@ -116,16 +116,27 @@ public class SudokuPuzzle {
 			return;
 		}
 		Integer startFilled = getFinishedCells();
-		if(isFinished(startFilled)){
+		/*if(isFinished(startFilled)){
 			System.out.println("Can't start Solving:");
 			System.out.println("This Puzzle is already Filled in.");
 			return;
-		}
+		}*/
 		System.out.println("The Puzzle is starting with " + startFilled + " cells filled in.");
 		//Puzzle is set up ok and not full
 		//Begin solving with stage 1
-		//TODO: set up booleans for subsequent stages and 
-		runStage1();
+		
+		boolean keepSolving = true;
+		Integer finishedCells;
+		//TODO: set up booleans for subsequent stages and
+		while (keepSolving){
+			runStage1();
+			finishedCells = getFinishedCells();
+			//System.out.println(this._allPuzzleCells.size());
+			if(finishedCells == this._allPuzzleCells.size()){
+				keepSolving = false;
+				System.out.println("Solved!");
+			}
+		}
 		
 		
 	}
@@ -141,6 +152,51 @@ public class SudokuPuzzle {
 	}
 	
 	public void runStage1(){
+		
+		Integer currentFinalValue = 0;
+		for (int i=0;i<this._allPuzzleCells.size(); ++i){
+			Cell currentCell = this._allPuzzleCells.get(i);
+			currentFinalValue = currentCell.get_finalval();
+			
+			
+			//Only check stuff if final value not assigned
+			if (currentFinalValue == 0){
+				Integer row = currentCell.get_rownum();
+				Integer col = currentCell.get_colnum();
+				Integer grid = currentCell.get_gridnum();
+				
+				//TODO:Only guess possible values
+				for(int guess = 1; guess <10; ++guess){
+					//Check cell's row for it
+					Integer checkValue = 0;
+					Integer tmpCellnum = 0;
+					//Step through cells in row/col/grid
+					for (int rgc=0; rgc < 3; ++rgc){
+						for (int j=0; j < 9; ++j){
+							if(rgc == 0){
+								tmpCellnum = this._rows.get(row).get(j);
+							}
+							else if (rgc == 1){
+								tmpCellnum = this._rows.get(col).get(j);
+							}
+							else if (rgc == 2){
+								tmpCellnum = this._rows.get(grid).get(j);
+							}
+							
+							checkValue = this._allPuzzleCells.get(tmpCellnum).get_finalval();
+							//Check cell row's cell value against guess value
+							//If match, remove it from current cell, since it won't be that value.
+							if(checkValue == guess){
+								//Removes guess from both 
+								currentCell.remove_possVal(new Integer(guess));
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		//TODO:Setup preference whether or not they want to hide impossible choices
 		
 	}
 	

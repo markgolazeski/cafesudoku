@@ -96,4 +96,10 @@ public class Cell {
 		return _dropDownList;
 	}
 	
+	public void remove_possVal(Integer x){
+			this._possvalues.removeElement(x);
+			this._dropDownList.removeItem(x);
+	}
+	
+	
 }

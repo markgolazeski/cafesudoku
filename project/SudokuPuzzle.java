@@ -129,6 +129,7 @@ public class SudokuPuzzle {
 		Integer finishedCells;
 		//TODO: set up booleans for subsequent stages and
 		while (keepSolving){
+			keepSolving = false;//run it once
 			runStage1();
 			finishedCells = getFinishedCells();
 			//System.out.println(this._allPuzzleCells.size());
@@ -156,6 +157,8 @@ public class SudokuPuzzle {
 		Integer currentFinalValue = 0;
 		for (int i=0;i<this._allPuzzleCells.size(); ++i){
 			Cell currentCell = this._allPuzzleCells.get(i);
+			System.out.print("Cell: " + i + " vals: ");
+			currentCell.dump_possVal();
 			currentFinalValue = currentCell.get_finalval();
 			
 			
@@ -183,14 +186,26 @@ public class SudokuPuzzle {
 								tmpCellnum = this._rows.get(grid).get(j);
 							}
 							
+							System.out.print("tmpCellnum:" + tmpCellnum + " ");
+							
 							checkValue = this._allPuzzleCells.get(tmpCellnum).get_finalval();
+							//if(tmpCellnum == 1){
+								
+							//	System.out.println("Cellnum = " + tmpCellnum + " finalValue: " + checkValue + " guess: " + guess);
+							//}
 							//Check cell row's cell value against guess value
 							//If match, remove it from current cell, since it won't be that value.
 							if(checkValue == guess){
 								//Removes guess from both 
+								/*if (tmpCellnum < 9){
+									System.out.println("Removing: " + guess + " From CellNumber: " + tmpCellnum);
+									System.out.println("rgc: " + rgc + " row: " + row + " col: " + col + " grid: " + grid );
+								}*/
+								
 								currentCell.remove_possVal(new Integer(guess));
 							}
 						}
+						System.out.println("");
 					}
 				}
 			}

@@ -97,9 +97,17 @@ public class Cell {
 	}
 	
 	public void remove_possVal(Integer x){
-			this._possvalues.removeElement(x);
-			this._dropDownList.removeItem(x);
+		this._possvalues.removeElement(x);
+		this._dropDownList.removeItem(x);
 	}
 	
+	public void dump_possVal(){
+		System.out.println(this._possvalues.size());
+		for (int i=0; i <this._possvalues.size(); ++i){
+			System.out.print(this._possvalues.get(i));
+		}
+		System.out.print("Hello \n");
+		
+	}
 	
 }

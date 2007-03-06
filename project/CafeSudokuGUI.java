@@ -25,7 +25,7 @@ public class CafeSudokuGUI{
 		JPanel puzzlePanel = new JPanel();
 		
 		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 17, 12));
-		puzzlePanel.setLayout(new GridLayout(9,9,6,6));
+		puzzlePanel.setLayout(new GridLayout(0,11,6,6));
 		
 		Vector<Integer> possValues = new Vector<Integer>();
 		
@@ -65,6 +65,11 @@ public class CafeSudokuGUI{
 			if (col % 3 == 2 && col < 7){
 				puzzlePanel.add(Box.createRigidArea(new Dimension(1,1)));
 			}
+			if (row %3 == 2 && col == 8 && row < 7){
+				for (int k =0; k<11; ++k){
+					puzzlePanel.add(Box.createRigidArea(new Dimension(1,1)));
+				}
+			}
 		}
 		
 		/*
@@ -86,6 +91,7 @@ public class CafeSudokuGUI{
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
+        //mainFrame.setMinimumSize(new Dimension(613,354));
         mainFrame.setResizable(false);
         
        handleFile();

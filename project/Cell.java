@@ -22,6 +22,8 @@ public class Cell {
 	}
 	
 	public Cell(Integer row, Integer col){
+		this._possvalues = new Vector<Integer>();
+		this._dropDownList = new JComboBox();
 		initializePossValues();
 		this._rownum = row;
 		this._colnum = col;
@@ -31,7 +33,6 @@ public class Cell {
 	}
 	
 	public void initializePossValues(){
-		this._possvalues = new Vector<Integer>();
 		for(int i=0;i<10;++i)
 		{
 			this._possvalues.add(i);
@@ -42,11 +43,10 @@ public class Cell {
 			So I just set up a new Vector of Integers and it works fine
 		*/
 		
-		Vector<Integer> choices = new Vector<Integer>();
 		for (int i=0; i<10;++i){
-			choices.add(i);
+			this._dropDownList.addItem(i);
 		}
-		_dropDownList = new JComboBox(choices);
+		
 		this._dropDownList.removeItem(0);
 		this._dropDownList.insertItemAt(new String("_"),0);
 		this._dropDownList.setSelectedIndex(0);

@@ -14,12 +14,22 @@ public class CafeSudokuGUI{
 	
 	private SudokuPuzzle _currentPuzzle;
 	
+	public CafeSudokuGUI(SudokuPuzzle x){
+		this._currentPuzzle = x;
+		_numComponents = new Vector<JComboBox>();
+		setUpGUI();
+		
+	}
 	public CafeSudokuGUI(){
 		
-		_currentPuzzle = new SudokuPuzzle();
-		
 		_numComponents = new Vector<JComboBox>();
+		this._currentPuzzle = new SudokuPuzzle();
+		setUpGUI();
 		//_numButtons = new Vector<JButton>();
+
+	}
+	
+	private void setUpGUI(){
 		JFrame mainFrame = new JFrame("Café Sudoku");
 		
 		JPanel puzzlePanel = new JPanel();
@@ -94,7 +104,6 @@ public class CafeSudokuGUI{
         //mainFrame.setMinimumSize(new Dimension(613,354));
         mainFrame.setResizable(false);
         
-       handleFile();
 	}
 	
 	private void updateFields(int cellNumber, int val){
@@ -113,9 +122,12 @@ public class CafeSudokuGUI{
 	public SudokuPuzzle get_currentPuzzle(){
 		return _currentPuzzle;
 	}
+	public void set_currentPuzzle(SudokuPuzzle x){
+		this._currentPuzzle = x;
+	}
 	
-	
-	private void handleFile(){
+	//TODO: Change this back t private
+	public void handleFile(){
 		
 		JDialog fileDialog = new JDialog();
 		

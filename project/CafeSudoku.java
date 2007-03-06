@@ -11,9 +11,14 @@ public class CafeSudoku {
 		//SudokuPuzzle puzzle = new SudokuPuzzle();
 		System.out.println("Printing");
 
-		//GUI creates initial SudokuPuzzle
-		CafeSudokuGUI _mainGUI = new CafeSudokuGUI();
+		SudokuPuzzle tmp = new SudokuPuzzle();
 		
+		//GUI creates initial SudokuPuzzle
+		CafeSudokuGUI _mainGUI = new CafeSudokuGUI(tmp);
+		
+		
+		_mainGUI.set_currentPuzzle(tmp);
+		_mainGUI.handleFile();
 		_mainGUI.get_currentPuzzle().solve();
 		//System.out.println("Starts Valid? " + _mainGUI.get_currentPuzzle().isValid());
 		

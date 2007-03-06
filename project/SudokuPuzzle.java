@@ -157,8 +157,7 @@ public class SudokuPuzzle {
 		Integer currentFinalValue = 0;
 		for (int i=0;i<this._allPuzzleCells.size(); ++i){
 			Cell currentCell = this._allPuzzleCells.get(i);
-			System.out.print("Cell: " + i + " vals: ");
-			currentCell.dump_possVal();
+			System.out.print("Cell: " + i + " vals: " + currentCell.num_possVal() + "\n");
 			currentFinalValue = currentCell.get_finalval();
 			
 			
@@ -186,7 +185,7 @@ public class SudokuPuzzle {
 								tmpCellnum = this._rows.get(grid).get(j);
 							}
 							
-							System.out.print("tmpCellnum:" + tmpCellnum + " ");
+							//System.out.print("tmpCellnum:" + tmpCellnum + " ");
 							
 							checkValue = this._allPuzzleCells.get(tmpCellnum).get_finalval();
 							//if(tmpCellnum == 1){
@@ -205,7 +204,6 @@ public class SudokuPuzzle {
 								currentCell.remove_possVal(new Integer(guess));
 							}
 						}
-						System.out.println("");
 					}
 				}
 			}

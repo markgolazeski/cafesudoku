@@ -139,32 +139,13 @@ public class CafeSudokuGUI{
 			FileReader fin = new FileReader(filename);
 			BufferedReader in = new BufferedReader(fin);
 			
-			int currentRow = 0;
-			Integer currentValue;
+			Integer currentRow = 0;
 			
 			while (in.ready() && currentRow < 9){
 				String text = in.readLine();
+				_currentPuzzle.parseInputLine(text, currentRow);
 
-				//System.out.println(text);
-				try{
-					String[] splitText = text.split(" ");
-					for (int i=0; i < splitText.length; ++i){
-						//System.out.println(splitText[i]);
-						//_ official way to represent 0 in file
-						if (splitText[i].equals("_")){
-							//System.out.println("Setting CurrentValue to 0");
-							currentValue = 0;
-						}
-						else{
-							currentValue = Integer.parseInt(splitText[i]);
-						}
-						this._currentPuzzle.get_puzzleCell((currentRow*9 + i)).set_finalval(currentValue);
-						this._currentPuzzle.get_puzzleCell((currentRow*9 + i)).update_comboBoxSelected(currentValue);
-					}
-				}
-				catch(Exception e){
-					//Not an Integer
-				}
+
 				
 				//Increment current row
 				currentRow = currentRow + 1;

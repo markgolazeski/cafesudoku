@@ -215,6 +215,30 @@ public class SudokuPuzzle {
 		
 	}
 	
+	public void parseInputLine(String line, Integer currentRow){
+		Integer currentValue = 0;
+		//System.out.println(text);
+		try{
+			String[] splitText = line.split(" ");
+			for (int i=0; i < splitText.length; ++i){
+				//System.out.println(splitText[i]);
+				//_ official way to represent 0 in file
+				if (splitText[i].equals("_")){
+					//System.out.println("Setting CurrentValue to 0");
+					currentValue = 0;
+				}
+				else{
+					currentValue = Integer.parseInt(splitText[i]);
+				}
+				this._allPuzzleCells.get((currentRow*9 + i)).set_finalval(currentValue);
+				this._allPuzzleCells.get((currentRow*9 + i)).update_comboBoxSelected(currentValue);
+			}
+		}
+		catch(Exception e){
+			//Not an Integer
+		}
+	}
+	
 
 	public Cell get_puzzleCell(int i) {
 		return _allPuzzleCells.get(i);

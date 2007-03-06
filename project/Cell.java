@@ -101,13 +101,15 @@ public class Cell {
 		this._dropDownList.removeItem(x);
 	}
 	
+	public int num_possVal(){
+		dump_possVal();
+		return this._possvalues.size();
+	}
+	
 	public void dump_possVal(){
-		System.out.println(this._possvalues.size());
 		for (int i=0; i <this._possvalues.size(); ++i){
 			System.out.print(this._possvalues.get(i));
 		}
-		System.out.print("Hello \n");
-		
 	}
 	
 }

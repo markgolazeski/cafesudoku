@@ -1,6 +1,8 @@
 package project;
 import java.util.Vector;
 
+import javax.print.attribute.standard.Finishings;
+
 
 public class SudokuPuzzle {
 
@@ -47,6 +49,8 @@ public class SudokuPuzzle {
 				this._grids.get(a.get_gridnum()).add(number);
 			}
 		}
+		
+		System.out.println("Puzzle Created!");
 		//System.out.println("rows: " + this._rows.toString());
 		//System.out.println("cols: " + this._cols.toString());
 		//System.out.println("grids: " + this._grids.toString());
@@ -125,19 +129,34 @@ public class SudokuPuzzle {
 		//Puzzle is set up ok and not full
 		//Begin solving with stage 1
 		
-		boolean keepSolving = true;
+		//keepSolving not needed for only one stage
+		//boolean keepSolving = true; 
+		boolean tryStage1 = true;
 		Integer finishedCells;
-		//TODO: set up booleans for subsequent stages and
-		while (keepSolving){
-			keepSolving = false;//run it once
-			runStage1();
+		//TODO: set up booleans and subsequent
+		//while (keepSolving){
+			//keepSolving = false;//run it once
+			while(tryStage1){
+				tryStage1 = runStage1();
+				if (!tryStage1){
+					//Try a second run through if it doesn't work once
+					tryStage1 = runStage1();
+				}
+			}
+			
+			//Stage1 failed
+			
 			finishedCells = getFinishedCells();
 			//System.out.println(this._allPuzzleCells.size());
 			if(finishedCells == this._allPuzzleCells.size()){
-				keepSolving = false;
+				//keepSolving = false;
 				System.out.println("Solved!");
 			}
-		}
+			
+			//All Stages fail, report unsolvable
+			System.out.println("Puzzle wasn't able to be solved by stage 1");
+			System.out.println("Cells solved: " + finishedCells);
+		//}
 		
 		
 	}
@@ -152,13 +171,19 @@ public class SudokuPuzzle {
 		return count;
 	}
 	
-	public void runStage1(){
+	public boolean runStage1(){
 		
+		Integer startCellsDone = this.getFinishedCells();
+		Integer endCellsDone = 0;
 		Integer currentFinalValue = 0;
 		for (int i=0;i<this._allPuzzleCells.size(); ++i){
 			Cell currentCell = this._allPuzzleCells.get(i);
-			System.out.print("Cell: " + i + " vals: " + currentCell.num_possVal() + "\n");
+			//System.out.print("Cell: " + i + " vals: " + currentCell.num_possVal() + "\n");
 			currentFinalValue = currentCell.get_finalval();
+			
+			
+			
+			//System.out.print("Cells Solved: " + startCellsDone);
 			
 			
 			//Only check stuff if final value not assigned
@@ -207,7 +232,27 @@ public class SudokuPuzzle {
 					}
 				}
 			}
+			
+			//Check if there's only one answer
+			Cell tmp = this._allPuzzleCells.get(i); 
+			if(tmp.num_possVal() <= 2){
+				Vector<Integer> tmpVal = tmp.get_possVal();
+				if(tmpVal.size() != 1){
+					tmpVal.remove(new Integer(0));
+				}
+				tmp.set_finalval(tmpVal.get(0));
+			}
 		}
+		
+		endCellsDone = getFinishedCells();
+		
+		if(endCellsDone == startCellsDone){
+			//No new cells figured out, return false
+			return false;
+		}
+		
+		//A cell was updated, stage 1 was successful
+		return true;
 		
 		//TODO:Setup preference whether or not they want to hide impossible choices
 		

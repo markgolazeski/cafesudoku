@@ -124,9 +124,10 @@ public class CafeSudokuGUI{
 	}
 	public void set_currentPuzzle(SudokuPuzzle x){
 		this._currentPuzzle = x;
+		return;
 	}
 	
-	//TODO: Change this back t private
+	//TODO: Change this back to private
 	public void handleFile(){
 		
 		JDialog fileDialog = new JDialog();
@@ -149,6 +150,8 @@ public class CafeSudokuGUI{
 		}
 		else{
 			System.out.println("File not chosen");
+			//TODO: Get rid of this ugly exit
+			System.exit(5);
 		}
 	}
 	

@@ -33,6 +33,7 @@ public class Cell {
 	}
 	
 	public void initializePossValues(){
+		this._possvalues.clear();
 		for(int i=0;i<10;++i)
 		{
 			this._possvalues.add(i);
@@ -51,10 +52,12 @@ public class Cell {
 		this._dropDownList.insertItemAt(new String("_"),0);
 		this._dropDownList.setSelectedIndex(0);
 		
+		//System.out.println("Cell Values: " + this._possvalues.toString());
+		
 	}
 	
 	public void update_comboBoxSelected(Integer x){
-		this._dropDownList.setSelectedIndex(x);
+		this._dropDownList.setSelectedItem(x);
 	}
 	
 	public Integer get_colnum() {
@@ -86,10 +89,11 @@ public class Cell {
 	}
 	
 	public void set_finalval(Integer x){
-		this._possvalues.clear();
-		this._possvalues.add(x);
-		
 		this._finalval = x;
+		this.update_comboBoxSelected(x);
+		//Need to change solving method before doing this
+		//Multiple lists of poss values added
+		//this.initializePossValues();
 	}
 	
 	public JComboBox get_comboBox(){
@@ -102,7 +106,7 @@ public class Cell {
 	}
 	
 	public int num_possVal(){
-		dump_possVal();
+		//dump_possVal();
 		return this._possvalues.size();
 	}
 	
@@ -110,6 +114,10 @@ public class Cell {
 		for (int i=0; i <this._possvalues.size(); ++i){
 			System.out.print(this._possvalues.get(i));
 		}
+	}
+	
+	public Vector<Integer> get_possVal(){
+		return this._possvalues;
 	}
 	
 }

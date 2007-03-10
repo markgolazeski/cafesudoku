@@ -47,26 +47,8 @@ public class CafeSudokuGUI{
 		for (int i=0; i < this._currentPuzzle.get_numCells(); ++i){
 			Cell a = this._currentPuzzle.get_puzzleCell(i);
 			
-			//TODO: Put in border (below) stuff here
-			Integer rghtBorder = 0;
-			Integer dwnBorder = 0;
-			
 			Integer row = this._currentPuzzle.get_puzzleCell(i).get_rownum();
 			Integer col = this._currentPuzzle.get_puzzleCell(i).get_colnum();
-			
-			
-			if (col % 3 == 2){
-				rghtBorder = 12;
-			}
-			else{
-				rghtBorder = 0;
-			}
-			if (row % 3 == 2){
-				dwnBorder = 12;
-			}
-			else{
-				dwnBorder = 0;
-			}
 			
 			puzzlePanel.add(a.get_comboBox());
 			/*if (col % 3 == 2 && row % 3 == 2){

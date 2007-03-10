@@ -152,9 +152,13 @@ public class SudokuPuzzle {
 			
 			finishedCells = getFinishedCells();
 			//System.out.println(this._allPuzzleCells.size());
-			if(finishedCells == this._allPuzzleCells.size()){
+			boolean endvalid = this.isValid();
+			if(finishedCells == this._allPuzzleCells.size() && endvalid){
 				//keepSolving = false;
 				System.out.println("Solved!");
+			}
+			else if(!endvalid){
+				System.out.println("There's a conflict in the ending puzzle");
 			}
 			else{
 				//All Stages fail, report unsolvable
@@ -228,12 +232,14 @@ public class SudokuPuzzle {
 							//If match, remove it from current cell, since it won't be that value.
 							if(checkValue == guess){
 								//Removes guess from both 
+								
+								currentCell.remove_possVal(new Integer(guess));
+								
 								/*if (tmpCellnum < 9){
 									System.out.println("Removing: " + guess + " From CellNumber: " + tmpCellnum);
 									System.out.println("rgc: " + rgc + " row: " + row + " col: " + col + " grid: " + grid );
 								}*/
 								
-								currentCell.remove_possVal(new Integer(guess));
 							}
 						}
 					}

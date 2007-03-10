@@ -55,6 +55,10 @@ public class SudokuPuzzle {
 		//System.out.println("cols: " + this._cols.toString());
 		//System.out.println("grids: " + this._grids.toString());
 		
+		/*for (int i=27; i<81; ++i){
+			System.out.println("Cell: " + i + " row: " + this._allPuzzleCells.get(i).get_rownum() + " col: " + this._allPuzzleCells.get(i).get_colnum() + " grid: " + this._allPuzzleCells.get(i).get_gridnum());
+		}*/
+		
 		/*for (int i=0; i<9;++i){
 			System.out.println("row(0),spot(" + i +"): " + this._rows.elementAt(0).get(i).toString());
 		}*/
@@ -144,7 +148,7 @@ public class SudokuPuzzle {
 				}
 			}
 			
-			//Stage1 failed
+			//Stage1 finished
 			
 			finishedCells = getFinishedCells();
 			//System.out.println(this._allPuzzleCells.size());
@@ -152,10 +156,12 @@ public class SudokuPuzzle {
 				//keepSolving = false;
 				System.out.println("Solved!");
 			}
+			else{
+				//All Stages fail, report unsolvable
+				System.out.println("Cells solved: " + finishedCells);	
+				System.out.println("Puzzle wasn't able to be solved by stage 1");
+			}
 			
-			//All Stages fail, report unsolvable
-			System.out.println("Puzzle wasn't able to be solved by stage 1");
-			System.out.println("Cells solved: " + finishedCells);
 		//}
 		
 		
@@ -181,10 +187,7 @@ public class SudokuPuzzle {
 			//System.out.print("Cell: " + i + " vals: " + currentCell.num_possVal() + "\n");
 			currentFinalValue = currentCell.get_finalval();
 			
-			
-			
 			//System.out.print("Cells Solved: " + startCellsDone);
-			
 			
 			//Only check stuff if final value not assigned
 			if (currentFinalValue == 0){
@@ -198,21 +201,25 @@ public class SudokuPuzzle {
 					Integer checkValue = 0;
 					Integer tmpCellnum = 0;
 					//Step through cells in row/col/grid
-					for (int rgc=0; rgc < 3; ++rgc){
+					for (int rcg=0; rcg < 3; ++rcg){
 						for (int j=0; j < 9; ++j){
-							if(rgc == 0){
+							if(rcg == 0){
 								tmpCellnum = this._rows.get(row).get(j);
+								//System.out.println("i: " + i + " row: " + row + " tmpCellnum: " + tmpCellnum);
 							}
-							else if (rgc == 1){
-								tmpCellnum = this._rows.get(col).get(j);
+							else if (rcg == 1){
+								tmpCellnum = this._cols.get(col).get(j);
+								//System.out.println("i: " + i + " col: " + col + " tmpCellnum: " + tmpCellnum);
 							}
-							else if (rgc == 2){
-								tmpCellnum = this._rows.get(grid).get(j);
+							else if (rcg == 2){
+								tmpCellnum = this._grids.get(grid).get(j);
+								//System.out.println("i: " + i + " grid: " + grid + " tmpCellnum: " + tmpCellnum);
 							}
 							
-							//System.out.print("tmpCellnum:" + tmpCellnum + " ");
+							//System.out.println("tmpCellnum:" + tmpCellnum + " ");
 							
 							checkValue = this._allPuzzleCells.get(tmpCellnum).get_finalval();
+							//System.out.println("Cell: " + tmpCellnum  + " checkValue: " + checkValue);
 							//if(tmpCellnum == 1){
 								
 							//	System.out.println("Cellnum = " + tmpCellnum + " finalValue: " + checkValue + " guess: " + guess);

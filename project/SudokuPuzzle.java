@@ -251,6 +251,7 @@ public class SudokuPuzzle {
 			if(tmp.num_possVal() <= 2){
 				Vector<Integer> tmpVal = tmp.get_possVal();
 				if(tmpVal.size() != 1){
+					//System.out.println(tmp.get_possVal().size());
 					tmpVal.remove(new Integer(0));
 				}
 				tmp.set_finalval(tmpVal.get(0));
@@ -286,8 +287,13 @@ public class SudokuPuzzle {
 				else{
 					currentValue = Integer.parseInt(splitText[i]);
 				}
-				this._allPuzzleCells.get((currentRow*9 + i)).set_finalval(currentValue);
-				this._allPuzzleCells.get((currentRow*9 + i)).update_comboBoxSelected(currentValue);
+
+				Cell currentCell = this._allPuzzleCells.get((currentRow*9 + i));
+				//TODO: Fix how possible values are initialized
+				//currentCell.initializePossValues();
+				
+				currentCell.set_finalval(currentValue);
+				currentCell.update_comboBoxSelected(currentValue);
 			}
 		}
 		catch(Exception e){

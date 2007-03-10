@@ -34,6 +34,11 @@ public class Cell {
 	
 	public void initializePossValues(){
 		this._possvalues.clear();
+		/*for(int i=0;i<this._dropDownList.getItemCount(); ++i){
+			this._dropDownList.remove(i);
+			System.out.println(this._dropDownList.getItemCount());
+		}*/
+		
 		for(int i=0;i<10;++i)
 		{
 			this._possvalues.add(i);
@@ -46,6 +51,7 @@ public class Cell {
 		
 		for (int i=0; i<10;++i){
 			this._dropDownList.addItem(i);
+			//System.out.println(this._dropDownList.getItemCount());
 		}
 		
 		this._dropDownList.removeItem(0);

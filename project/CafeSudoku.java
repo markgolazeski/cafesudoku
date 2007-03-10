@@ -18,8 +18,8 @@ public class CafeSudoku {
 		
 		
 		//_mainGUI.set_currentPuzzle(tmp);
-		_mainGUI.handleFile();
-		_mainGUI.get_currentPuzzle().solve();
+		//_mainGUI.handleFile();
+		//_mainGUI.get_currentPuzzle().solve();
 		//System.out.println("Starts Valid? " + _mainGUI.get_currentPuzzle().isValid());
 		
 		

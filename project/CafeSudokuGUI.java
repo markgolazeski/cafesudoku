@@ -1,5 +1,7 @@
 package project;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Vector;
 
@@ -41,6 +43,13 @@ public class CafeSudokuGUI{
 		
 		JButton openBtn = new JButton("Open...");
 		JButton solveBtn = new JButton("Solve");
+		
+		openBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {handleFile();}
+		});
+		solveBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {_currentPuzzle.solve();}
+		});
 		
 		JPanel buttonRow = new JPanel();
 		
@@ -152,8 +161,8 @@ public class CafeSudokuGUI{
 		}
 		else{
 			System.out.println("File not chosen");
-			//TODO: Get rid of this ugly exit
-			System.exit(5);
+			//This forced exit only needed before open button set up 
+			//System.exit(5);
 		}
 	}
 	

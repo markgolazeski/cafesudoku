@@ -34,6 +34,16 @@ public class CafeSudokuGUI{
 		
 		JPanel puzzlePanel = new JPanel();
 		
+		JButton openBtn = new JButton("Open...");
+		JButton solveBtn = new JButton("Solve");
+		
+		JPanel buttonRow = new JPanel();
+		
+		buttonRow.setLayout(new BoxLayout (buttonRow, BoxLayout.X_AXIS));
+		
+		buttonRow.add(openBtn);
+		buttonRow.add(solveBtn);
+		
 		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 17, 12));
 		puzzlePanel.setLayout(new GridLayout(0,11,6,6));
 		
@@ -79,6 +89,7 @@ public class CafeSudokuGUI{
 
 		
 		mainFrame.add(puzzlePanel);
+		mainFrame.add(buttonRow, BorderLayout.SOUTH);
 		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();

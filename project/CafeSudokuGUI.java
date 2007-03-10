@@ -31,8 +31,13 @@ public class CafeSudokuGUI{
 	
 	private void setUpGUI(){
 		JFrame mainFrame = new JFrame("Café Sudoku");
-		
+
+		JPanel borderPanel = new JPanel();
+		borderPanel.setLayout(new BorderLayout());
+		borderPanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 17, 12));
+
 		JPanel puzzlePanel = new JPanel();
+		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(0,0,6,0));
 		
 		JButton openBtn = new JButton("Open...");
 		JButton solveBtn = new JButton("Solve");
@@ -41,10 +46,12 @@ public class CafeSudokuGUI{
 		
 		buttonRow.setLayout(new BoxLayout (buttonRow, BoxLayout.X_AXIS));
 		
+		Component buttonSpace = Box.createRigidArea(new Dimension(6,6));
+		
 		buttonRow.add(openBtn);
+		buttonRow.add(buttonSpace);
 		buttonRow.add(solveBtn);
 		
-		puzzlePanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 17, 12));
 		puzzlePanel.setLayout(new GridLayout(0,11,6,6));
 		
 		Vector<Integer> possValues = new Vector<Integer>();
@@ -88,14 +95,16 @@ public class CafeSudokuGUI{
 		
 
 		
-		mainFrame.add(puzzlePanel);
-		mainFrame.add(buttonRow, BorderLayout.SOUTH);
+		borderPanel.add(puzzlePanel, BorderLayout.CENTER);
+		borderPanel.add(buttonRow, BorderLayout.SOUTH);
+		
+		mainFrame.add(borderPanel);
 		
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
         //mainFrame.setMinimumSize(new Dimension(613,354));
-        mainFrame.setResizable(false);
+        mainFrame.setResizable(true);
         
 	}
 	

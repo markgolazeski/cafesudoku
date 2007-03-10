@@ -101,7 +101,7 @@ public class Cell {
 	}
 	
 	public void remove_possVal(Integer x){
-		this._possvalues.removeElement(x);
+		this._possvalues.remove(new Integer(x));
 		this._dropDownList.removeItem(x);
 	}
 	
@@ -111,7 +111,7 @@ public class Cell {
 	}
 	
 	public void dump_possVal(){
-		for (int i=0; i <this._possvalues.size(); ++i){
+		for (int i=0; i < this._possvalues.size(); ++i){
 			System.out.print(this._possvalues.get(i));
 		}
 	}

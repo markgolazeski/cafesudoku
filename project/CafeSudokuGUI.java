@@ -102,9 +102,21 @@ public class CafeSudokuGUI{
 			}
 		}//*/
 		
-
+		JEditorPane editorPane = new JEditorPane();
+		editorPane.setEditable(false);
+		try{
+			editorPane.setPage("http://www.google.com");
+		}
+		catch (IOException e){
+			System.err.println("Error loading page!");
+		}
 		
-		borderPanel.add(puzzlePanel, BorderLayout.CENTER);
+		JPanel cMain = new JPanel();
+		cMain.setLayout(new GridLayout(1,3));		
+		
+		cMain.add(puzzlePanel);
+		cMain.add(editorPane);
+		borderPanel.add(cMain);
 		borderPanel.add(buttonRow, BorderLayout.SOUTH);
 		
 		mainFrame.add(borderPanel);

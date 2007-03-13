@@ -1,4 +1,6 @@
 package project;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
@@ -30,6 +32,22 @@ public class Cell {
 		//Formula to get grid number from row and col
 		this._gridnum = (3 * ((row/*-1*/) / 3) + ((col/*-1*/) / 3)); 
 		//System.out.println("row: " + this._rownum + " col: " + this._colnum + " grid: " + this._gridnum);
+		
+		this._dropDownList.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				String sv = (String)cb.getSelectedItem().toString();
+				Integer iv = 0; 
+				if(sv.equals("_")){
+					//System.out.println("Setting CurrentValue to 0");
+					iv = 0;
+				}
+				else{
+					iv = Integer.parseInt(sv);
+				}
+				set_finalval(iv);
+			}
+		});
 	}
 	
 	public void initializePossValues(){

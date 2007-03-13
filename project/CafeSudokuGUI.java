@@ -102,17 +102,18 @@ public class CafeSudokuGUI{
 			}
 		}//*/
 		
+		//TODO: Add this to a separate, Help, Window
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
 		try{
-			editorPane.setPage("http://www.google.com");
+			editorPane.setPage("file:///Users/mark/Documents/index.html");
 		}
 		catch (IOException e){
 			System.err.println("Error loading page!");
 		}
 		
 		JPanel cMain = new JPanel();
-		cMain.setLayout(new GridLayout(1,3));		
+		cMain.setLayout(new BoxLayout(cMain, BoxLayout.X_AXIS));		
 		
 		cMain.add(puzzlePanel);
 		cMain.add(editorPane);
@@ -189,8 +190,6 @@ public class CafeSudokuGUI{
 				String text = in.readLine();
 				_currentPuzzle.parseInputLine(text, currentRow);
 
-
-				
 				//Increment current row
 				currentRow = currentRow + 1;
 			}

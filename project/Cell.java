@@ -125,8 +125,11 @@ public class Cell {
 	}
 	
 	public void remove_possVal(Integer x){
-		this._possvalues.remove(new Integer(x));
+		this._possvalues.remove(x);
 		this._dropDownList.removeItem(x);
+		if (x == 0){
+			this._dropDownList.removeItem(new String("_"));
+		}
 	}
 	
 	public int num_possVal(){

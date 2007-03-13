@@ -64,6 +64,19 @@ public class SudokuPuzzle {
 		}*/
 	}
 	
+	public void reset(){
+		for(int i =0; i<this._allPuzzleCells.size(); ++i){
+			Cell tmp = this._allPuzzleCells.get(i);
+			tmp.set_finalval(0);
+			for (int j=1; j<10; ++j){
+				tmp.remove_possVal(j);
+			}
+			tmp.initializePossValues();
+			tmp.remove_possVal(0);
+		}
+		
+	}
+	
 	public boolean isFinished(Integer x){
 		if(x < this._allPuzzleCells.size()){
 			return false;
@@ -223,23 +236,12 @@ public class SudokuPuzzle {
 							//System.out.println("tmpCellnum:" + tmpCellnum + " ");
 							
 							checkValue = this._allPuzzleCells.get(tmpCellnum).get_finalval();
-							//System.out.println("Cell: " + tmpCellnum  + " checkValue: " + checkValue);
-							//if(tmpCellnum == 1){
-								
-							//	System.out.println("Cellnum = " + tmpCellnum + " finalValue: " + checkValue + " guess: " + guess);
-							//}
 							//Check cell row's cell value against guess value
 							//If match, remove it from current cell, since it won't be that value.
 							if(checkValue == guess){
 								//Removes guess from both 
 								
 								currentCell.remove_possVal(new Integer(guess));
-								
-								/*if (tmpCellnum < 9){
-									System.out.println("Removing: " + guess + " From CellNumber: " + tmpCellnum);
-									System.out.println("rgc: " + rgc + " row: " + row + " col: " + col + " grid: " + grid );
-								}*/
-								
 							}
 						}
 					}

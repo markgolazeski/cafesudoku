@@ -1,6 +1,7 @@
 package project;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Vector;
@@ -33,6 +34,22 @@ public class CafeSudokuGUI{
 	
 	private void setUpGUI(){
 		JFrame mainFrame = new JFrame("Café Sudoku");
+		
+		//TODO:Set up Menu
+		JMenuBar menubar = new JMenuBar();
+		mainFrame.setJMenuBar(menubar);
+		
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.setMnemonic(94);
+		menubar.add(fileMenu);
+		
+		JMenuItem open = new JMenuItem("Open...");
+		open.setMnemonic(111);
+		open.setAccelerator(KeyStroke.getKeyStroke('O', 2));
+		open.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {openFile();}
+		});
+		fileMenu.add(open);
 
 		JPanel borderPanel = new JPanel();
 		borderPanel.setLayout(new BorderLayout());
@@ -45,7 +62,7 @@ public class CafeSudokuGUI{
 		JButton solveBtn = new JButton("Solve");
 		
 		openBtn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {handleFile();}
+			public void actionPerformed(ActionEvent e) {openFile();}
 		});
 		solveBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {_currentPuzzle.solve();}
@@ -106,6 +123,7 @@ public class CafeSudokuGUI{
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
 		try{
+			//TODO: Make this a relative path as opposed to an absolute one
 			editorPane.setPage("file:///Users/mark/Documents/index.html");
 		}
 		catch (IOException e){
@@ -149,6 +167,13 @@ public class CafeSudokuGUI{
 	public void set_currentPuzzle(SudokuPuzzle x){
 		this._currentPuzzle = x;
 		return;
+	}
+	
+	
+	public void openFile(){
+		
+		//this._currentPuzzle.reset();
+		handleFile();
 	}
 	
 	//TODO: Change this back to private

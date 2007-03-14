@@ -1,9 +1,6 @@
 package project;
 import java.util.Vector;
 
-import javax.print.attribute.standard.Finishings;
-
-
 public class SudokuPuzzle {
 
 	private Vector<Cell> _allPuzzleCells;

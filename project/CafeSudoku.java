@@ -14,7 +14,7 @@ public class CafeSudoku {
 		SudokuPuzzle tmp = new SudokuPuzzle();
 		
 		//GUI creates initial SudokuPuzzle
-		CafeSudokuGUI _mainGUI = new CafeSudokuGUI(tmp);
+		new CafeSudokuGUI(tmp);
 		
 		
 		//_mainGUI.set_currentPuzzle(tmp);

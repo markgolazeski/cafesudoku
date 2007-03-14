@@ -304,7 +304,8 @@ public class SudokuPuzzle {
 		
 	}
 	
-	public void parseInputLine(String line, Integer currentRow){
+	public boolean parseInputLine(String line, Integer currentRow){
+		boolean allOk = true;
 		Integer currentValue = 0;
 		//System.out.println(text);
 		try{
@@ -317,7 +318,10 @@ public class SudokuPuzzle {
 					currentValue = 0;
 				}
 				else{
-					currentValue = Integer.parseInt(splitText[i]);
+					//Prevent a bunch of error messages about bad int parsing
+					if (allOk){
+						currentValue = Integer.parseInt(splitText[i]);
+					}
 				}
 
 				Cell currentCell = this._allPuzzleCells.get((currentRow*9 + i));
@@ -327,9 +331,13 @@ public class SudokuPuzzle {
 				currentCell.set_finalval(currentValue);
 				currentCell.update_comboBoxSelected(currentValue);
 			}
+			return true;
 		}
 		catch(Exception e){
 			//Not an Integer
+			//System.out.println(allOk);
+			displayErrorMessage("File not properly formatted.\nPlease open a different file.");
+			return false;
 		}
 	}
 	

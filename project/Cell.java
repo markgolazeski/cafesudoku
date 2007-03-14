@@ -1,4 +1,5 @@
 package project;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -141,6 +142,17 @@ public class Cell {
 		for (int i=0; i < this._possvalues.size(); ++i){
 			System.out.print(this._possvalues.get(i));
 		}
+	}
+	
+	public void change_bgcolor(String x){
+		Color color = Color.WHITE;
+		if (x.equals("RED")){
+			color = Color.RED;
+		}
+		else if(x.equals("WHITE")){
+			color = Color.WHITE;
+		}
+		this._dropDownList.setBackground(color);
 	}
 	
 	public Vector<Integer> get_possVal(){

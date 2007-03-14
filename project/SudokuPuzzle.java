@@ -1,6 +1,8 @@
 package project;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 public class SudokuPuzzle {
 
 	private Vector<Cell> _allPuzzleCells;
@@ -74,16 +76,41 @@ public class SudokuPuzzle {
 		
 	}
 	
+	//TODO:figure out a way to consolidate this with the one in the GUI class
+	private void displayErrorMessage(String message){
+		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
 	public boolean isFinished(Integer x){
 		if(x < this._allPuzzleCells.size()){
 			return false;
 		}
 		return true;
 	}
+	public void reset_bgColor(){
+		Vector<Integer> currentVector = new Vector<Integer>();
+		for (int i=0; i<27; ++i){
+			if (i < 9){
+				currentVector = this._rows.get(i);
+			}
+			else if (i < 18){
+				//System.out.println("Less than 18: " + i % 9);
+				currentVector = this._cols.get(i % 9);
+			}
+			else{
+				currentVector = this._grids.get(i % 9);
+			}
+			for(int w=0; w< currentVector.size(); ++w){
+				this._allPuzzleCells.get(currentVector.get(w)).change_bgcolor("WHITE");
+			}
+		}
+	}
 	
 	//Checks if a puzzle has valid entries
 	//TODO: Highlight bad value(s)
 	public boolean isValid(){
+		//First reset bg colors
+		reset_bgColor();
 		String inCurrently = "";
 		Integer count = 0;
 		Integer compareValue = 0;
@@ -116,21 +143,27 @@ public class SudokuPuzzle {
 					}
 					//Duplicate in the row
 					if(count > 1){
-						System.out.println("There is a conflict in " + inCurrently + " " + (i%9 + 1) + ".");
+						//System.out.println("There is a conflict in " + inCurrently + " " + (i%9 + 1) + ".");
+						for(int w=0; w< currentVector.size(); ++w){
+							this._allPuzzleCells.get(currentVector.get(w)).change_bgcolor("RED");
+						}
 						return false;
 					}
 				}
 				//System.out.println("count: " + count);
+				for(int w=0; w< currentVector.size(); ++w){
+					this._allPuzzleCells.get(currentVector.get(w)).change_bgcolor("WHITE");
+				}
 			}
 		}
+		
 		return true;
 	}
 	
 	//General solving
 	public void solve(){
 		if (!this.isValid()){
-			System.out.println("Can't start Solving:");
-			System.out.println("There are conflicts in the starting puzzle.");
+			displayErrorMessage("Can't Start Solving: A Conflict was Found.\nThe First Conflict Found is Highlighted.");
 			return;
 		}
 		Integer startFilled = getFinishedCells();
@@ -139,7 +172,7 @@ public class SudokuPuzzle {
 			System.out.println("This Puzzle is already Filled in.");
 			return;
 		}*/
-		System.out.println("The Puzzle is starting with " + startFilled + " cells filled in.");
+		System.out.println("The Puzzle is Starting with " + startFilled + " Cells Filled in.");
 		//Puzzle is set up ok and not full
 		//Begin solving with stage 1
 		

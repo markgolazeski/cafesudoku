@@ -68,12 +68,21 @@ public class CafeSudokuGUI{
 		
 		JButton openBtn = new JButton("Open...");
 		JButton solveBtn = new JButton("Solve");
+		JButton validBtn = new JButton("Validate");
 		
 		openBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {openFile();}
 		});
 		solveBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {_currentPuzzle.solve();}
+		});
+		validBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(!_currentPuzzle.isValid()){
+					//TODO:Update to mention they are highlighted, once implemented
+					displayErrorMessage("This Puzzle is not valid.\nThe first conflict found is highlighted.");
+				}
+			}
 		});
 		
 		JPanel buttonRow = new JPanel();
@@ -85,6 +94,8 @@ public class CafeSudokuGUI{
 		buttonRow.add(openBtn);
 		buttonRow.add(buttonSpace);
 		buttonRow.add(solveBtn);
+		buttonRow.add(buttonSpace);
+		buttonRow.add(validBtn);
 		
 		puzzlePanel.setLayout(new GridLayout(0,11,6,6));
 		
@@ -136,33 +147,40 @@ public class CafeSudokuGUI{
         mainFrame.pack();
         mainFrame.setVisible(true);
         //mainFrame.setMinimumSize(new Dimension(613,354));
-        mainFrame.setResizable(true);
+        mainFrame.setResizable(false);
         
 	}
 	
 	private void displayHelpWindow(){
-		JFrame helpFrame = new JFrame("Help Contents");
+		JDialog helpFrame = new JDialog();
 		
-		//TODO: Add this to a separate, Help, Window
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
 		try{
 			//TODO: Make this a relative path as opposed to an absolute one
 			editorPane.setPage("file:///Users/mark/Documents/index.html");
+			//editorPane.setPage("http://www.pages.drexel.edu/~mjg722/startpage.html");
 		}
 		catch (IOException e){
-			System.err.println("Error loading page!");
+			displayErrorMessage("Error loading page!");
 		}
 		
 		JPanel cMain = new JPanel();
 		cMain.add(editorPane);
 		helpFrame.add(cMain);
 		
-        helpFrame.pack();
+        helpFrame.setSize(418, 466);
+        //TODO:Set up help window to display next to mainframe instead of on top of it
+        //helpFrame.setLocationRelativeTo(mainFrame);
         helpFrame.setVisible(true);
-        //mainFrame.setMinimumSize(new Dimension(613,354));
         helpFrame.setResizable(true);
 	}
+	
+	private void displayErrorMessage(String message){
+		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	
 	private void updateFields(int cellNumber, int val){
 		//Set requested button value to value being passed in.
 		//_numComponents.get(cellNumber).setText(new Integer(val).toString());
@@ -187,11 +205,12 @@ public class CafeSudokuGUI{
 	
 	public void openFile(){
 		
+		//TODO:Reset puzzle to be able to load in a new one without problems
 		//this._currentPuzzle.reset();
 		handleFile();
 	}
 	
-	//TODO: Change this back to private
+	//TODO: Change this back to private 
 	public void handleFile(){
 		
 		JDialog fileDialog = new JDialog();
@@ -199,21 +218,21 @@ public class CafeSudokuGUI{
 		final JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(fileDialog);
 		if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
-			System.out.println("File chosen");
+			//System.out.println("File chosen");
 			File chosenFile = fc.getSelectedFile();
 			if (!chosenFile.canRead());
 			{
 				//Throw can't read error, return
 			}
 
-			System.out.println(chosenFile.getAbsolutePath());
+			displayErrorMessage(chosenFile.getAbsolutePath());
 			//Read in File
 			this.readFile(chosenFile.getAbsolutePath());
 			
 			
 		}
 		else{
-			System.out.println("File not chosen");
+			//System.out.println("File not chosen");
 			//This forced exit only needed before open button set up 
 			//System.exit(5);
 		}

@@ -40,8 +40,11 @@ public class CafeSudokuGUI{
 		mainFrame.setJMenuBar(menubar);
 		
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.setMnemonic(94);
+		fileMenu.setMnemonic(70);
 		menubar.add(fileMenu);
+		
+		JMenu helpMenu = new JMenu("Help");
+		menubar.add(helpMenu);
 		
 		JMenuItem open = new JMenuItem("Open...");
 		open.setMnemonic(111);
@@ -50,6 +53,13 @@ public class CafeSudokuGUI{
 			public void actionPerformed(ActionEvent e) {openFile();}
 		});
 		fileMenu.add(open);
+		
+		JMenuItem help = new JMenuItem("Help Contents");
+		help.setMnemonic(72);
+		helpMenu.add(help);
+		help.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {displayHelpWindow();}
+		});
 
 		JPanel borderPanel = new JPanel();
 		borderPanel.setLayout(new BorderLayout());
@@ -119,23 +129,7 @@ public class CafeSudokuGUI{
 			}
 		}//*/
 		
-		//TODO: Add this to a separate, Help, Window
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setEditable(false);
-		try{
-			//TODO: Make this a relative path as opposed to an absolute one
-			editorPane.setPage("file:///Users/mark/Documents/index.html");
-		}
-		catch (IOException e){
-			System.err.println("Error loading page!");
-		}
-		
-		JPanel cMain = new JPanel();
-		cMain.setLayout(new BoxLayout(cMain, BoxLayout.X_AXIS));		
-		
-		cMain.add(puzzlePanel);
-		cMain.add(editorPane);
-		borderPanel.add(cMain);
+		borderPanel.add(puzzlePanel);
 		borderPanel.add(buttonRow, BorderLayout.SOUTH);
 		
 		mainFrame.add(borderPanel);
@@ -148,6 +142,29 @@ public class CafeSudokuGUI{
         
 	}
 	
+	private void displayHelpWindow(){
+		JFrame helpFrame = new JFrame("Help Contents");
+		
+		//TODO: Add this to a separate, Help, Window
+		JEditorPane editorPane = new JEditorPane();
+		editorPane.setEditable(false);
+		try{
+			//TODO: Make this a relative path as opposed to an absolute one
+			editorPane.setPage("file:///Users/mark/Documents/index.html");
+		}
+		catch (IOException e){
+			System.err.println("Error loading page!");
+		}
+		
+		JPanel cMain = new JPanel();
+		cMain.add(editorPane);
+		helpFrame.add(cMain);
+		
+        helpFrame.pack();
+        helpFrame.setVisible(true);
+        //mainFrame.setMinimumSize(new Dimension(613,354));
+        helpFrame.setResizable(true);
+	}
 	private void updateFields(int cellNumber, int val){
 		//Set requested button value to value being passed in.
 		//_numComponents.get(cellNumber).setText(new Integer(val).toString());

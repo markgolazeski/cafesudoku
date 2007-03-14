@@ -44,6 +44,15 @@ public class CafeSudokuGUI{
 		JMenu helpMenu = new JMenu("Help");
 		menubar.add(helpMenu);
 		
+		//TODO:Add puzzle margins
+		JMenuItem newPuzzle = new JMenuItem("New");
+		newPuzzle.setMnemonic(78);
+		newPuzzle.setAccelerator(KeyStroke.getKeyStroke('N', 2));
+		newPuzzle.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {newPuzzle();}
+		});
+		fileMenu.add(newPuzzle);
+		
 		JMenuItem open = new JMenuItem("Open...");
 		open.setMnemonic(111);
 		open.setAccelerator(KeyStroke.getKeyStroke('O', 2));
@@ -51,6 +60,15 @@ public class CafeSudokuGUI{
 			public void actionPerformed(ActionEvent e) {openFile();}
 		});
 		fileMenu.add(open);
+		fileMenu.add(new JSeparator());
+		
+		JMenuItem save = new JMenuItem("Save");
+		save.setMnemonic(123);
+		save.setAccelerator(KeyStroke.getKeyStroke('S', 2));
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){savePuzzle();}
+		});
+		fileMenu.add(save);
 		
 		JMenuItem help = new JMenuItem("Help Contents");
 		help.setMnemonic(72);
@@ -74,7 +92,9 @@ public class CafeSudokuGUI{
 			public void actionPerformed(ActionEvent e) {openFile();}
 		});
 		solveBtn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {_currentPuzzle.solve();}
+			public void actionPerformed(ActionEvent e) {
+				_currentPuzzle.setKeepSolving(true);
+				_currentPuzzle.solve();}
 		});
 		validBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -151,7 +171,7 @@ public class CafeSudokuGUI{
         
 	}
 	
-	private void displayHelpWindow(){
+	private static void displayHelpWindow(){
 		JDialog helpFrame = new JDialog();
 		
 		JEditorPane editorPane = new JEditorPane();
@@ -176,7 +196,37 @@ public class CafeSudokuGUI{
         helpFrame.setResizable(true);
 	}
 	
-	private void displayErrorMessage(String message){
+	public static String displayStepSolve(Integer guess){
+		
+		String message = "Removing possible value " + guess;
+		
+		Object[] options = {"Next Step", "Finish Solving", "Stop Solving"};		
+		
+		int n = JOptionPane.showOptionDialog(null, message, "Continue Stepping?", 
+				JOptionPane.YES_NO_CANCEL_OPTION, 
+				JOptionPane.INFORMATION_MESSAGE, 
+				null, 
+				options, options[0]);
+		
+		if(n == JOptionPane.YES_OPTION){
+			//Keep on stepping
+			return "YES";
+		}
+		if(n == JOptionPane.NO_OPTION){
+			//Stop stepping, go solve
+			return "NO";
+		}
+		if(n == JOptionPane.CANCEL_OPTION){
+			//TODO: Figure out way to abort solve from here
+			//Stop stepping
+			System.out.println("CANCEL");
+			return "CANCEL";
+		}
+
+		return "YES";
+	}
+	
+	public static void displayErrorMessage(String message){
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
@@ -192,6 +242,14 @@ public class CafeSudokuGUI{
 			this.updateFields(i, puzzle.get_puzzleCell(i).get_finalval());
 			
 		}
+	}
+	
+	public void newPuzzle(){
+		//TODO:Check if puzzle is blank
+		//TODO:If it isn't prompt to save
+	}
+	public void savePuzzle(){
+		
 	}
 	
 	public SudokuPuzzle get_currentPuzzle(){
@@ -225,7 +283,7 @@ public class CafeSudokuGUI{
 				//Throw can't read error, return
 			}
 
-			displayErrorMessage(chosenFile.getAbsolutePath());
+			//displayErrorMessage(chosenFile.getAbsolutePath());
 			//Read in File
 			this.readFile(chosenFile.getAbsolutePath());
 			
@@ -233,28 +291,27 @@ public class CafeSudokuGUI{
 		}
 		else{
 			//System.out.println("File not chosen");
-			//This forced exit only needed before open button set up 
-			//System.exit(5);
 		}
 	}
 	
 	private void readFile(String filename){
+		//Watches file input validity, stops if messed up
+		boolean stillGoodInput = true;
 		try{
 			FileReader fin = new FileReader(filename);
 			BufferedReader in = new BufferedReader(fin);
-			
 			Integer currentRow = 0;
-			
-			while (in.ready() && currentRow < 9){
+
+			while (in.ready() && currentRow < 9 && stillGoodInput){
 				String text = in.readLine();
-				_currentPuzzle.parseInputLine(text, currentRow);
+				stillGoodInput = _currentPuzzle.parseInputLine(text, currentRow);
 
 				//Increment current row
 				currentRow = currentRow + 1;
 			}
 		}
 		catch (Exception e){
-			System.err.print(e);
+			displayErrorMessage("Error reading file.");
 		}
 		
 	}

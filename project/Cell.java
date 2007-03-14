@@ -53,10 +53,11 @@ public class Cell {
 	
 	public void initializePossValues(){
 		this._possvalues.clear();
-		/*for(int i=0;i<this._dropDownList.getItemCount(); ++i){
+		this._dropDownList.setSelectedItem(0);
+
+		for(int i=1;i<this._dropDownList.getItemCount();++i){
 			this._dropDownList.remove(i);
-			System.out.println(this._dropDownList.getItemCount());
-		}*/
+		}
 		
 		for(int i=0;i<10;++i)
 		{
@@ -72,8 +73,8 @@ public class Cell {
 			this._dropDownList.addItem(i);
 			//System.out.println(this._dropDownList.getItemCount());
 		}
-		
-		this._dropDownList.removeItem(0);
+		this._dropDownList.setSelectedIndex(1);
+		this._dropDownList.removeItemAt(0);
 		this._dropDownList.insertItemAt(new String("_"),0);
 		this._dropDownList.setSelectedIndex(0);
 		
@@ -138,6 +139,10 @@ public class Cell {
 		return this._possvalues.size();
 	}
 	
+	public void show_possVal(){
+		this._dropDownList.showPopup();
+	}
+	
 	public void dump_possVal(){
 		for (int i=0; i < this._possvalues.size(); ++i){
 			System.out.print(this._possvalues.get(i));
@@ -151,6 +156,9 @@ public class Cell {
 		}
 		else if(x.equals("WHITE")){
 			color = Color.WHITE;
+		}
+		else if(x.equals("YELLOW")){
+			color = Color.YELLOW;
 		}
 		this._dropDownList.setBackground(color);
 	}

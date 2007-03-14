@@ -1,7 +1,6 @@
 package project;
-import java.util.Vector;
 
-import javax.swing.JOptionPane;
+import java.util.Vector;
 
 public class SudokuPuzzle {
 
@@ -14,6 +13,9 @@ public class SudokuPuzzle {
 	private Vector<Vector <Integer>> _rows;
 	private Vector<Vector <Integer>> _cols;
 	private Vector<Vector <Integer>> _grids;
+	
+	private boolean stepPref = true;
+	private boolean keepSolving = true; 
 	
 	public SudokuPuzzle(){
 		//Initialize Vectors for Row/Columns/Grids
@@ -29,6 +31,8 @@ public class SudokuPuzzle {
 			this._cols.add(b);
 			this._grids.add(c);
 		}
+		
+		
 		
 		System.out.println("Creating SudokuPuzzle()");
 		_allPuzzleCells = new Vector<Cell>();
@@ -66,20 +70,21 @@ public class SudokuPuzzle {
 	public void reset(){
 		for(int i =0; i<this._allPuzzleCells.size(); ++i){
 			Cell tmp = this._allPuzzleCells.get(i);
-			tmp.set_finalval(0);
+/*			tmp.set_finalval(0);
 			for (int j=1; j<10; ++j){
 				tmp.remove_possVal(j);
-			}
+			}*/
 			tmp.initializePossValues();
-			tmp.remove_possVal(0);
+			//tmp.remove_possVal(0);
 		}
 		
 	}
 	
 	//TODO:figure out a way to consolidate this with the one in the GUI class
-	private void displayErrorMessage(String message){
+	/*private void displayErrorMessage(String message){
+		 
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
-	}
+	}*/
 	
 	public boolean isFinished(Integer x){
 		if(x < this._allPuzzleCells.size()){
@@ -163,15 +168,14 @@ public class SudokuPuzzle {
 	//General solving
 	public void solve(){
 		if (!this.isValid()){
-			displayErrorMessage("Can't Start Solving: A Conflict was Found.\nThe First Conflict Found is Highlighted.");
+			CafeSudokuGUI.displayErrorMessage("Can't start solving: A conflict was found.\nThe first conflict found is highlighted.");
 			return;
 		}
 		Integer startFilled = getFinishedCells();
-		/*if(isFinished(startFilled)){
-			System.out.println("Can't start Solving:");
-			System.out.println("This Puzzle is already Filled in.");
+		if(isFinished(startFilled)){
+			CafeSudokuGUI.displayErrorMessage("Can't start solving:\nThis puzzle is already correctly solved.");
 			return;
-		}*/
+		}
 		System.out.println("The Puzzle is Starting with " + startFilled + " Cells Filled in.");
 		//Puzzle is set up ok and not full
 		//Begin solving with stage 1
@@ -183,7 +187,7 @@ public class SudokuPuzzle {
 		//TODO: set up booleans and subsequent
 		//while (keepSolving){
 			//keepSolving = false;//run it once
-			while(tryStage1){
+			while(tryStage1 && isKeepSolving()){
 				tryStage1 = runStage1();
 				if (!tryStage1){
 					//Try a second run through if it doesn't work once
@@ -201,12 +205,12 @@ public class SudokuPuzzle {
 				System.out.println("Solved!");
 			}
 			else if(!endvalid){
-				System.out.println("There's a conflict in the ending puzzle");
+				CafeSudokuGUI.displayErrorMessage("There's a conflict in the ending puzzle.");
 			}
 			else{
 				//All Stages fail, report unsolvable
 				System.out.println("Cells solved: " + finishedCells);	
-				System.out.println("Puzzle wasn't able to be solved by stage 1");
+				CafeSudokuGUI.displayErrorMessage("Puzzle wasn't solved by stage 1.\n" + finishedCells + "/81 cells were filled in successfully.");
 			}
 			
 		//}
@@ -230,6 +234,11 @@ public class SudokuPuzzle {
 		Integer endCellsDone = 0;
 		Integer currentFinalValue = 0;
 		for (int i=0;i<this._allPuzzleCells.size(); ++i){
+			if(!isKeepSolving()){
+				//System.out.println("returning false");
+				return false;
+			}
+			//Allow user to abort solving
 			Cell currentCell = this._allPuzzleCells.get(i);
 			//System.out.print("Cell: " + i + " vals: " + currentCell.num_possVal() + "\n");
 			currentFinalValue = currentCell.get_finalval();
@@ -244,12 +253,20 @@ public class SudokuPuzzle {
 				
 				//TODO:Only guess possible values
 				for(int guess = 1; guess <10; ++guess){
+					if(!isKeepSolving()){
+						//System.out.println("returning false");
+						return false;
+					}
 					//Check cell's row for it
 					Integer checkValue = 0;
 					Integer tmpCellnum = 0;
 					//Step through cells in row/col/grid
 					for (int rcg=0; rcg < 3; ++rcg){
 						for (int j=0; j < 9; ++j){
+							if(!isKeepSolving()){
+								//System.out.println("returning false");
+								return false;
+							}
 							if(rcg == 0){
 								tmpCellnum = this._rows.get(row).get(j);
 								//System.out.println("i: " + i + " row: " + row + " tmpCellnum: " + tmpCellnum);
@@ -268,17 +285,23 @@ public class SudokuPuzzle {
 							checkValue = this._allPuzzleCells.get(tmpCellnum).get_finalval();
 							//Check cell row's cell value against guess value
 							//If match, remove it from current cell, since it won't be that value.
-							if(checkValue == guess){
+							if(checkValue == guess && currentCell.get_possVal().contains(guess)){
 								//Removes guess from both 
-								
+								//TODO:Step goes here
+								if(this.stepPref){
+									//Only do it once, for now
+									//Still runs more than once since step is being set to true at top
+									takeSolveStep(i, tmpCellnum, guess);
+
+								}
 								currentCell.remove_possVal(new Integer(guess));
 							}
 						}
 					}
 				}
 			}
-			
-			//Check if there's only one answer
+		
+			//Check if there's only one possible value
 			Cell tmp = this._allPuzzleCells.get(i); 
 			if(tmp.num_possVal() <= 2){
 				Vector<Integer> tmpVal = tmp.get_possVal();
@@ -288,6 +311,7 @@ public class SudokuPuzzle {
 				}
 				tmp.set_finalval(tmpVal.get(0));
 			}
+			this.keepSolving = true;
 		}
 		
 		endCellsDone = getFinishedCells();
@@ -302,6 +326,35 @@ public class SudokuPuzzle {
 		
 		//TODO:Setup preference whether or not they want to hide impossible choices
 		
+	}
+	
+	public void takeSolveStep(Integer first, Integer second, Integer guess){
+		
+		Cell firstCell = this._allPuzzleCells.get(first);
+		Cell secondCell = this._allPuzzleCells.get(second);
+
+		//Highlight Cells in question
+		firstCell.change_bgcolor("YELLOW");
+		secondCell.change_bgcolor("YELLOW");
+		
+		firstCell.show_possVal();
+
+		String stepPrefString = CafeSudokuGUI.displayStepSolve(guess);
+		if(stepPrefString.equals("YES")){
+			this.setStepPref(true);
+			this.setKeepSolving(true);
+		}
+		else if(stepPrefString.equals("NO")){
+			this.setStepPref(false);
+			this.setKeepSolving(true);
+		}
+		else if(stepPrefString.equals("CANCEL")){
+			this.setStepPref(false);
+			this.setKeepSolving(false);
+		}
+		
+		firstCell.change_bgcolor("WHITE");
+		secondCell.change_bgcolor("WHITE");
 	}
 	
 	public boolean parseInputLine(String line, Integer currentRow){
@@ -336,7 +389,7 @@ public class SudokuPuzzle {
 		catch(Exception e){
 			//Not an Integer
 			//System.out.println(allOk);
-			displayErrorMessage("File not properly formatted.\nPlease open a different file.");
+			CafeSudokuGUI.displayErrorMessage("File not properly formatted.\nPlease open a different file.");
 			return false;
 		}
 	}
@@ -348,5 +401,21 @@ public class SudokuPuzzle {
 	
 	public int get_numCells(){
 		return _allPuzzleCells.size();
+	}
+
+	public boolean isStepPref() {
+		return stepPref;
+	}
+
+	public void setStepPref(boolean stepPref) {
+		this.stepPref = stepPref;
+	}
+
+	public boolean isKeepSolving() {
+		return keepSolving;
+	}
+
+	public void setKeepSolving(boolean keepSolving) {
+		this.keepSolving = keepSolving;
 	}
 }

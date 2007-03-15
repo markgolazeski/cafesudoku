@@ -1,1 +1,26 @@
-Test
+Mark Golazeski
+mjg722@drexel.edu
+CS 338
+Final Project: Cafe Sudoku
+
+This project takes an input file containing a puzzle from the user and solves it according to Sudoku rules.
+
+Known Problems with the Program:
+When opening a second file in a session, the values will be loaded in correctly, but the cells will contain two sets of possible values.
+The "New Puzzle" menu item does not work, based off of the same issue that plagues opening a second file. 
+
+Both of these issues stem from an inability to remove all possible values from the drop down list while one of those values is selected. Several work arounds were attempted with switching to a different value, deleting the original, and then switching back, but none of them worked properly.
+
+The preferences menu has not been implemented, so it is impossible to default the step solver to off.
+It is also currently impossible to validate the puzzle automatically, it must be done by pressing the button.
+
+After a puzzle is validated, and cells with conflict are highlighted, sometimes the bg hilighting is not properly removed when solving is attempted.
+
+The step solver, when stepping through the program, is designed to drop down the current cell's list of possible values, to display exactly what is goin on. Since the window dealing with step solve is a modal dialog, the drop down list instantly closes. This could be fixed by making it a modeless dialog window instead, but it requires more overhead.
+
+There is currently only one, non-changable algorithm for solving puzzles.
+
+When a puzzle is saved to a file, it only contains final values, so any possible values removed will not be remembered.
+
+Finally, the program does not check to see if a puzzle was updated since last save before either exiting or creating a new puzzle. It does successfully notice if a puzzle hasn't been saved at all.
+

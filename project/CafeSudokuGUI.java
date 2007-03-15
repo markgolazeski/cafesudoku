@@ -1,3 +1,12 @@
+/* 	Mark Golazeski
+	CS 338
+	Final Project: Cafe Sudoku
+	
+	CafeSudokuGUI.java - handles drawing of windows
+		-also handles events
+		-holds current puzzle for easy manipulation
+*/
+
 package project;
 
 import java.awt.*;
@@ -46,9 +55,11 @@ public class CafeSudokuGUI{
 		menubar.add(fileMenu);
 		
 		JMenu puzzleMenu = new JMenu("Puzzle");
+		puzzleMenu.setMnemonic(80);
 		menubar.add(puzzleMenu);
 		
 		JMenu helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic(72);
 		menubar.add(helpMenu);
 		
 		//TODO:Add puzzle margins
@@ -93,7 +104,7 @@ public class CafeSudokuGUI{
 		fileMenu.add(exit);
 		
 		JMenuItem solve = new JMenuItem("Solve");
-		solve.setMnemonic(118);
+		solve.setMnemonic(108);
 		solve.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				_currentPuzzle.setKeepSolving(true);
@@ -114,6 +125,7 @@ public class CafeSudokuGUI{
 		});
 		puzzleMenu.add(validate);
 		
+		//Preference menu in here, but doesn't actually do anything yet.
 		JMenuItem prefs = new JMenuItem("Preferences");
 		prefs.setMnemonic(80);
 		prefs.addActionListener(new ActionListener(){
@@ -277,8 +289,14 @@ public class CafeSudokuGUI{
 	}
 	
 	public void displayPrefs(){
-		JDialog prefs = new JDialog();
-		prefs.setTitle("Preferences");
+		//Not implemented yet, show basic error explaining what will be added.
+		//JDialog prefs = new JDialog();
+		//prefs.setTitle("Preferences");
+		
+		displayErrorMessage("Sorry, but this feature isn't implemented yet.\n" +
+				"Eventually, this will be where you can change\n" +
+				"preferences including different solving styles\n" +
+				"and the frequency of validation." );
 		
 		//JButton 
 	}

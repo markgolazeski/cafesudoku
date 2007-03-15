@@ -1,3 +1,11 @@
+/* 	Mark Golazeski
+	CS 338
+	Final Project: Cafe Sudoku
+	
+	CafeSudoku.java - contains main function
+		-instatiates GUI and intial puzzle
+*/
+
 package project;
 
 

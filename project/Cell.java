@@ -1,3 +1,11 @@
+/* 	Mark Golazeski
+	CS 338
+	Final Project: Cafe Sudoku
+	
+	Cell.java - contains informaion for cells
+		-cells are components that build up puzzles
+*/
+
 package project;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

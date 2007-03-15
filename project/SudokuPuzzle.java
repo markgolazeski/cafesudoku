@@ -1,3 +1,11 @@
+/* 	Mark Golazeski
+	CS 338
+	Final Project: Cafe Sudoku
+	
+	SudokuPuzzle.java - builds and manages puzzles
+		- contains algorithm used for solving (just stage1 at this point)
+*/
+
 package project;
 
 import java.util.Vector;
@@ -191,6 +199,7 @@ public class SudokuPuzzle {
 		//TODO: set up booleans and subsequent
 		//while (keepSolving){
 			//keepSolving = false;//run it once
+			//right now there's only one way to solve puzzles
 			while(tryStage1 && isKeepSolving()){
 				tryStage1 = runStage1();
 				if (!tryStage1){

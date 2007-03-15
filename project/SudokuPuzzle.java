@@ -15,6 +15,7 @@ public class SudokuPuzzle {
 	private Vector<Vector <Integer>> _grids;
 	
 	private boolean stepPref = true;
+	private boolean alwaysCheckPref = true;
 	private boolean keepSolving = true; 
 	
 	public SudokuPuzzle(){
@@ -52,6 +53,7 @@ public class SudokuPuzzle {
 				this._grids.get(a.get_gridnum()).add(number);
 			}
 		}
+		
 		
 		System.out.println("Puzzle Created!");
 		//System.out.println("rows: " + this._rows.toString());
@@ -394,6 +396,28 @@ public class SudokuPuzzle {
 		}
 	}
 	
+	public String get_rowOutput(int x){
+		Vector<Integer> current = this._rows.get(x);
+		String output = "";
+		Integer value = -1;
+		for(int i=0; i<current.size(); ++i){
+			value = this._allPuzzleCells.get(current.get(i)).get_finalval();
+			if(value == 0){
+				output = output + "_";
+			}
+			else{
+				output = output + this._allPuzzleCells.get(current.get(i)).get_finalval().toString();
+			}
+			if(i<current.size()-1){
+				output = output + " ";
+			}
+		}
+		
+		output = output + "\n";
+		
+		return output;
+	}
+	
 
 	public Cell get_puzzleCell(int i) {
 		return _allPuzzleCells.get(i);
@@ -417,5 +441,13 @@ public class SudokuPuzzle {
 
 	public void setKeepSolving(boolean keepSolving) {
 		this.keepSolving = keepSolving;
+	}
+
+	public boolean isAlwaysCheckPref() {
+		return alwaysCheckPref;
+	}
+
+	public void setAlwaysCheckPref(boolean alwaysCheckPref) {
+		this.alwaysCheckPref = alwaysCheckPref;
 	}
 }

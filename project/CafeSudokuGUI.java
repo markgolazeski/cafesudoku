@@ -62,13 +62,13 @@ public class CafeSudokuGUI{
 		fileMenu.add(open);
 		fileMenu.add(new JSeparator());
 		
-		JMenuItem save = new JMenuItem("Save");
-		save.setMnemonic(123);
-		save.setAccelerator(KeyStroke.getKeyStroke('S', 2));
-		save.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){savePuzzle();}
+		JMenuItem saveAs = new JMenuItem("Save As...");
+		saveAs.setMnemonic(123);
+		saveAs.setAccelerator(KeyStroke.getKeyStroke('S', 2));
+		saveAs.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){saveAsPuzzle();}
 		});
-		fileMenu.add(save);
+		fileMenu.add(saveAs);
 		
 		JMenuItem help = new JMenuItem("Help Contents");
 		help.setMnemonic(72);
@@ -202,6 +202,7 @@ public class CafeSudokuGUI{
 		
 		Object[] options = {"Next Step", "Finish Solving", "Stop Solving"};		
 		
+		JOptionPane test = new JOptionPane();
 		int n = JOptionPane.showOptionDialog(null, message, "Continue Stepping?", 
 				JOptionPane.YES_NO_CANCEL_OPTION, 
 				JOptionPane.INFORMATION_MESSAGE, 
@@ -248,18 +249,28 @@ public class CafeSudokuGUI{
 		//TODO:Check if puzzle is blank
 		//TODO:If it isn't prompt to save
 	}
-	public void savePuzzle(){
+	public void saveAsPuzzle(){
+		JDialog fileDialog = new JDialog();
 		
+		final JFileChooser fc = new JFileChooser();
+		int returnVal = fc.showSaveDialog(fileDialog);
+		if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
+			//System.out.println("File chosen");
+			File chosenFile = fc.getSelectedFile();
+			if (!chosenFile.canRead()){
+				//Throw can't read error, return
+			}
+			else{
+				//System.out.println("File not chosen");
+			}
+
+			//displayErrorMessage(chosenFile.getAbsolutePath());
+			//WriteFile
+			this.writeFile(chosenFile.getAbsolutePath());
+			
+			
+		}
 	}
-	
-	public SudokuPuzzle get_currentPuzzle(){
-		return _currentPuzzle;
-	}
-	public void set_currentPuzzle(SudokuPuzzle x){
-		this._currentPuzzle = x;
-		return;
-	}
-	
 	
 	public void openFile(){
 		
@@ -278,8 +289,8 @@ public class CafeSudokuGUI{
 		if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
 			//System.out.println("File chosen");
 			File chosenFile = fc.getSelectedFile();
-			if (!chosenFile.canRead());
-			{
+			if (!chosenFile.canRead()){
+				displayErrorMessage("Can't read file.\nMake sure the selected file is readable");
 				//Throw can't read error, return
 			}
 
@@ -309,10 +320,41 @@ public class CafeSudokuGUI{
 				//Increment current row
 				currentRow = currentRow + 1;
 			}
+			in.close();
+			fin.close();
 		}
 		catch (Exception e){
 			displayErrorMessage("Error reading file.");
 		}
 		
+	}
+	
+	private void writeFile(String filename){
+		//Get puzzle to output row by row and write it
+		try{
+			if(!filename.toLowerCase().endsWith(".txt")){
+				filename = filename + ".txt";
+			}
+			BufferedWriter fout = new	BufferedWriter(new FileWriter(filename));
+			String toWrite = "";
+			for (int i=0; i<9;++i){
+				toWrite = this._currentPuzzle.get_rowOutput(i);
+				fout.write(toWrite);
+			}
+			
+			fout.close();
+		}
+		catch(IOException e){
+			displayErrorMessage("Error writing to file.\nMake sure you can write to the file.");
+		}
+		
+	}
+	
+	public SudokuPuzzle get_currentPuzzle(){
+		return _currentPuzzle;
+	}
+	public void set_currentPuzzle(SudokuPuzzle x){
+		this._currentPuzzle = x;
+		return;
 	}
 }

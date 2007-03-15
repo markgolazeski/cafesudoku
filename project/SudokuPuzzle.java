@@ -214,7 +214,7 @@ public class SudokuPuzzle {
 			else{
 				//All Stages fail, report unsolvable
 				System.out.println("Cells solved: " + finishedCells);	
-				CafeSudokuGUI.displayErrorMessage("Puzzle wasn't solved by stage 1.\n" + finishedCells + "/81 cells were filled in successfully.");
+				CafeSudokuGUI.displayErrorMessage("Puzzle wasn't successfully solved.\n" + finishedCells + " out of 81 cells were filled in successfully.");
 			}
 			
 		//}

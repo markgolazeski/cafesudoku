@@ -70,7 +70,7 @@ public class CafeSudokuGUI{
 		fileMenu.add(new JSeparator());
 		
 		JMenuItem save = new JMenuItem("Save");
-		save.setMnemonic(123);
+		save.setMnemonic(83);
 		save.setAccelerator(KeyStroke.getKeyStroke('S', 2));
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){savePuzzle();}
@@ -78,14 +78,22 @@ public class CafeSudokuGUI{
 		fileMenu.add(save);
 		
 		JMenuItem saveAs = new JMenuItem("Save As...");
+		saveAs.setMnemonic(65);
 		saveAs.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){saveAsPuzzle();}
 		});
 		fileMenu.add(saveAs);
 		fileMenu.add(new JSeparator());
 		
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.setMnemonic(69);
+		exit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){cleanUpandQuit();}
+		});
+		fileMenu.add(exit);
+		
 		JMenuItem solve = new JMenuItem("Solve");
-		solve.setMnemonic(83);
+		solve.setMnemonic(118);
 		solve.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				_currentPuzzle.setKeepSolving(true);
@@ -95,7 +103,7 @@ public class CafeSudokuGUI{
 		puzzleMenu.add(solve);
 		
 		JMenuItem validate = new JMenuItem("Validate");
-		validate.setMnemonic(123);
+		validate.setMnemonic(86);
 		validate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(!_currentPuzzle.isValid()){
@@ -106,10 +114,19 @@ public class CafeSudokuGUI{
 		});
 		puzzleMenu.add(validate);
 		
-		JMenuItem help = new JMenuItem("Help Contents");
-		help.setMnemonic(72);
-		helpMenu.add(help);
-		help.addActionListener(new ActionListener(){
+		JMenuItem prefs = new JMenuItem("Preferences");
+		prefs.setMnemonic(80);
+		prefs.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+					displayPrefs();
+			}
+		});
+		puzzleMenu.add(prefs);
+		
+		JMenuItem contents = new JMenuItem("Contents");
+		contents.setMnemonic(67);
+		helpMenu.add(contents);
+		contents.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {displayHelpWindow();}
 		});
 
@@ -257,6 +274,13 @@ public class CafeSudokuGUI{
         helpFrame.setResizable(true);
         
 		
+	}
+	
+	public void displayPrefs(){
+		JDialog prefs = new JDialog();
+		prefs.setTitle("Preferences");
+		
+		//JButton 
 	}
 	
 	public static String displayStepSolve(Integer guess){
@@ -425,6 +449,32 @@ public class CafeSudokuGUI{
 			displayErrorMessage("Error writing to file.\nMake sure you can write to the file.");
 		}
 		
+	}
+	
+	private void cleanUpandQuit(){
+		//Check if puzzle needs to be saved
+		String message = "Puzzle not saved.\nSave Now?";
+		Object options[] = {"Save","Don't Save","Cancel"};
+		if(this._currentPuzzle.get_filename().equals("")){
+			int n = JOptionPane.showOptionDialog(null, message, "Step Solve", 
+					JOptionPane.YES_NO_CANCEL_OPTION, 
+					JOptionPane.WARNING_MESSAGE, 
+					null, 
+					options, options[0]);
+			
+			if(n == JOptionPane.YES_OPTION){
+				//Save
+				saveAsPuzzle();
+			}
+			if(n == JOptionPane.NO_OPTION){
+				//Exit without saving
+				System.exit(0);
+			}
+			if(n == JOptionPane.CANCEL_OPTION){
+				//Cancel, go  back to program
+				return;
+			}
+		}
 	}
 	
 	public SudokuPuzzle get_currentPuzzle(){

@@ -1,11 +1,15 @@
 package project;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.URL;
 import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 
 public class CafeSudokuGUI{
@@ -41,6 +45,9 @@ public class CafeSudokuGUI{
 		fileMenu.setMnemonic(70);
 		menubar.add(fileMenu);
 		
+		JMenu puzzleMenu = new JMenu("Puzzle");
+		menubar.add(puzzleMenu);
+		
 		JMenu helpMenu = new JMenu("Help");
 		menubar.add(helpMenu);
 		
@@ -62,13 +69,42 @@ public class CafeSudokuGUI{
 		fileMenu.add(open);
 		fileMenu.add(new JSeparator());
 		
+		JMenuItem save = new JMenuItem("Save");
+		save.setMnemonic(123);
+		save.setAccelerator(KeyStroke.getKeyStroke('S', 2));
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){savePuzzle();}
+		});
+		fileMenu.add(save);
+		
 		JMenuItem saveAs = new JMenuItem("Save As...");
-		saveAs.setMnemonic(123);
-		saveAs.setAccelerator(KeyStroke.getKeyStroke('S', 2));
 		saveAs.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){saveAsPuzzle();}
 		});
 		fileMenu.add(saveAs);
+		fileMenu.add(new JSeparator());
+		
+		JMenuItem solve = new JMenuItem("Solve");
+		solve.setMnemonic(83);
+		solve.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				_currentPuzzle.setKeepSolving(true);
+				_currentPuzzle.solve();
+			}
+		});
+		puzzleMenu.add(solve);
+		
+		JMenuItem validate = new JMenuItem("Validate");
+		validate.setMnemonic(123);
+		validate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(!_currentPuzzle.isValid()){
+					//TODO:Update to mention they are highlighted, once implemented
+					displayErrorMessage("This Puzzle is not valid.\nThe first conflict found is highlighted.");
+				}
+			}
+		});
+		puzzleMenu.add(validate);
 		
 		JMenuItem help = new JMenuItem("Help Contents");
 		help.setMnemonic(72);
@@ -99,7 +135,6 @@ public class CafeSudokuGUI{
 		validBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if(!_currentPuzzle.isValid()){
-					//TODO:Update to mention they are highlighted, once implemented
 					displayErrorMessage("This Puzzle is not valid.\nThe first conflict found is highlighted.");
 				}
 			}
@@ -173,27 +208,55 @@ public class CafeSudokuGUI{
 	
 	private static void displayHelpWindow(){
 		JDialog helpFrame = new JDialog();
-		
 		JEditorPane editorPane = new JEditorPane();
+		
+		Dimension helpSize = new Dimension(400,440);
+
+		editorPane.setContentType( "text/html" );
+		editorPane.addHyperlinkListener(new HyperlinkListener(){
+			public void hyperlinkUpdate(HyperlinkEvent e) { if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                JEditorPane pane = (JEditorPane)e.getSource();
+                try {
+                    // Show the new page in the editor pane.
+                    pane.setPage(e.getURL());
+                } catch (IOException f) {
+                }
+            }}
+		});
 		editorPane.setEditable(false);
+
+		
 		try{
-			//TODO: Make this a relative path as opposed to an absolute one
-			editorPane.setPage("file:///Users/mark/Documents/index.html");
+			
+			//Generate Path to File, append index of help Docs.
+			File f = new File("");
+			String ppwd = f.toURL().toString(); //pwd
+			URL pwd = new URL(ppwd + "/Docs/index.html");
+			
+			editorPane.setPage(pwd);
 			//editorPane.setPage("http://www.pages.drexel.edu/~mjg722/startpage.html");
 		}
 		catch (IOException e){
-			displayErrorMessage("Error loading page!");
+			displayErrorMessage("Error loading help!");
 		}
+		//Put it in a scrollPane
+
+		editorPane.setSize(helpSize);
+		
+		
+		//TODO: Add ScrollBar here
 		
 		JPanel cMain = new JPanel();
 		cMain.add(editorPane);
 		helpFrame.add(cMain);
 		
-        helpFrame.setSize(418, 466);
+        helpFrame.setSize(new Dimension(418,466));
         //TODO:Set up help window to display next to mainframe instead of on top of it
         //helpFrame.setLocationRelativeTo(mainFrame);
         helpFrame.setVisible(true);
         helpFrame.setResizable(true);
+        
+		
 	}
 	
 	public static String displayStepSolve(Integer guess){
@@ -201,9 +264,9 @@ public class CafeSudokuGUI{
 		String message = "Removing possible value " + guess;
 		
 		Object[] options = {"Next Step", "Finish Solving", "Stop Solving"};		
-		
-		JOptionPane test = new JOptionPane();
-		int n = JOptionPane.showOptionDialog(null, message, "Continue Stepping?", 
+
+		//TODO: Change this to a modeless dialog
+		int n = JOptionPane.showOptionDialog(null, message, "Step Solve", 
 				JOptionPane.YES_NO_CANCEL_OPTION, 
 				JOptionPane.INFORMATION_MESSAGE, 
 				null, 
@@ -249,6 +312,7 @@ public class CafeSudokuGUI{
 		//TODO:Check if puzzle is blank
 		//TODO:If it isn't prompt to save
 	}
+
 	public void saveAsPuzzle(){
 		JDialog fileDialog = new JDialog();
 		
@@ -267,8 +331,20 @@ public class CafeSudokuGUI{
 			//displayErrorMessage(chosenFile.getAbsolutePath());
 			//WriteFile
 			this.writeFile(chosenFile.getAbsolutePath());
+			this._currentPuzzle.set_filename(chosenFile.getAbsolutePath());
 			
 			
+		}
+	}
+	
+	public void savePuzzle(){
+		if(this._currentPuzzle.get_filename().equals("")){
+			saveAsPuzzle();
+		}
+		else{
+			File file = new File(this._currentPuzzle.get_filename());
+			file.delete();
+			this.writeFile(this._currentPuzzle.get_filename());
 		}
 	}
 	
@@ -277,6 +353,7 @@ public class CafeSudokuGUI{
 		//TODO:Reset puzzle to be able to load in a new one without problems
 		//this._currentPuzzle.reset();
 		handleFile();
+		_currentPuzzle.isValid();
 	}
 	
 	//TODO: Change this back to private 

@@ -18,6 +18,8 @@ public class SudokuPuzzle {
 	private boolean alwaysCheckPref = true;
 	private boolean keepSolving = true; 
 	
+	private String _filename = "";
+	
 	public SudokuPuzzle(){
 		//Initialize Vectors for Row/Columns/Grids
 		this._rows = new Vector<Vector <Integer>>();
@@ -449,5 +451,13 @@ public class SudokuPuzzle {
 
 	public void setAlwaysCheckPref(boolean alwaysCheckPref) {
 		this.alwaysCheckPref = alwaysCheckPref;
+	}
+
+	public String get_filename() {
+		return _filename;
+	}
+
+	public void set_filename(String _filename) {
+		this._filename = _filename;
 	}
 }

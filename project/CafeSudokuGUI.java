@@ -44,7 +44,7 @@ public class CafeSudokuGUI{
 	}
 	
 	private void setUpGUI(){
-		JFrame mainFrame = new JFrame("Café Sudoku");
+		JFrame mainFrame = new JFrame("Caf√© Sudoku");
 		
 		//TODO:Set up Menu
 		JMenuBar menubar = new JMenuBar();

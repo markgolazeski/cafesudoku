@@ -8,7 +8,6 @@
  */
 package project;
 
-
 public class CafeSudoku {
 
     protected CafeSudokuGUI _mainGUI;
@@ -24,18 +23,15 @@ public class CafeSudoku {
         //GUI creates initial SudokuPuzzle
         new CafeSudokuGUI(tmp);
 
-
         //_mainGUI.set_currentPuzzle(tmp);
         //_mainGUI.handleFile();
         //_mainGUI.get_currentPuzzle().solve();
         //System.out.println("Starts Valid? " + _mainGUI.get_currentPuzzle().isValid());
 
-
-
         //_mainGUI.syncPuzzleGUI(puzzle);
     }
 
-    public SudokuPuzzle getCurrentPuzzle(){
+    public SudokuPuzzle getCurrentPuzzle() {
         return this._currPuzzle;
     }
 }

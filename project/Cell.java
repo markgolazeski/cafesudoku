@@ -6,15 +6,14 @@
  * Cell.java - contains informaion for cells
  * -cells are components that build up puzzles
  */
-
 package project;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
-
 
 public class Cell {
 
@@ -28,12 +27,12 @@ public class Cell {
     private Vector<Integer> _possvalues; //Vector that contains possible values
 
 
-    public Cell(){
+    public Cell() {
         //System.out.println("Creating Cell()");
         initializePossValues();
     }
 
-    public Cell(Integer row, Integer col){
+    public Cell(Integer row, Integer col) {
         this._possvalues = new Vector<Integer>();
         this._dropDownList = new JComboBox();
         initializePossValues();
@@ -43,16 +42,16 @@ public class Cell {
         this._gridnum = (3 * ((row/*-1*/) / 3) + ((col/*-1*/) / 3));
         //System.out.println("row: " + this._rownum + " col: " + this._colnum + " grid: " + this._gridnum);
 
-        this._dropDownList.addActionListener(new ActionListener(){
+        this._dropDownList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JComboBox cb = (JComboBox)e.getSource();
                 String sv = (String)cb.getSelectedItem().toString();
                 Integer iv = 0;
-                if(sv.equals("_")){
+                if(sv.equals("_")) {
                     //System.out.println("Setting CurrentValue to 0");
                     iv = 0;
                 }
-                else{
+                else {
                     iv = Integer.parseInt(sv);
                 }
         set_finalval(iv);
@@ -60,16 +59,15 @@ public class Cell {
         });
     }
 
-    public void initializePossValues(){
+    public void initializePossValues() {
         this._possvalues.clear();
         this._dropDownList.setSelectedItem(0);
 
-        for(int i=1;i<this._dropDownList.getItemCount();++i){
+        for(int i=1;i<this._dropDownList.getItemCount();++i) {
             this._dropDownList.remove(i);
         }
 
-        for(int i=0;i<10;++i)
-        {
+        for(int i=0; i<10; ++i) {
             this._possvalues.add(i);
         }
 
@@ -78,7 +76,7 @@ public class Cell {
             So I just set up a new Vector of Integers and it works fine
             */
 
-        for (int i=0; i<10;++i){
+        for (int i=0; i<10;++i) {
             this._dropDownList.addItem(i);
             //System.out.println(this._dropDownList.getItemCount());
         }
@@ -91,7 +89,7 @@ public class Cell {
 
     }
 
-    public void update_comboBoxSelected(Integer x){
+    public void update_comboBoxSelected(Integer x) {
         this._dropDownList.setSelectedItem(x);
     }
 
@@ -123,7 +121,7 @@ public class Cell {
         return _finalval;
     }
 
-    public void set_finalval(Integer x){
+    public void set_finalval(Integer x) {
         this._finalval = x;
         this.update_comboBoxSelected(x);
         //Need to change solving method before doing this
@@ -131,48 +129,48 @@ public class Cell {
         //this.initializePossValues();
     }
 
-    public JComboBox get_comboBox(){
+    public JComboBox get_comboBox() {
         return _dropDownList;
     }
 
-    public void remove_possVal(Integer x){
+    public void remove_possVal(Integer x) {
         this._possvalues.remove(x);
         this._dropDownList.removeItem(x);
-        if (x == 0){
+        if (x == 0) {
             this._dropDownList.removeItem(new String("_"));
         }
     }
 
-    public int num_possVal(){
+    public int num_possVal() {
         //dump_possVal();
         return this._possvalues.size();
     }
 
-    public void show_possVal(){
+    public void show_possVal() {
         this._dropDownList.showPopup();
     }
 
-    public void dump_possVal(){
-        for (int i=0; i < this._possvalues.size(); ++i){
+    public void dump_possVal() {
+        for (int i=0; i < this._possvalues.size(); ++i) {
             System.out.print(this._possvalues.get(i));
         }
     }
 
-    public void change_bgcolor(String x){
+    public void change_bgcolor(String x) {
         Color color = Color.WHITE;
-        if (x.equals("RED")){
+        if (x.equals("RED")) {
             color = Color.RED;
         }
-        else if(x.equals("WHITE")){
+        else if(x.equals("WHITE")) {
             color = Color.WHITE;
         }
-        else if(x.equals("YELLOW")){
+        else if(x.equals("YELLOW")) {
             color = Color.YELLOW;
         }
         this._dropDownList.setBackground(color);
     }
 
-    public Vector<Integer> get_possVal(){
+    public Vector<Integer> get_possVal() {
         return this._possvalues;
     }
 

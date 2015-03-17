@@ -22,20 +22,20 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 
-public class CafeSudokuGUI{
+public class CafeSudokuGUI {
 
     private static Vector<JComboBox> _numComponents;
     //private static Vector<JButton> _numButtons;
 
     private SudokuPuzzle _currentPuzzle;
 
-    public CafeSudokuGUI(SudokuPuzzle x){
+    public CafeSudokuGUI(SudokuPuzzle x) {
         this._currentPuzzle = x;
         _numComponents = new Vector<JComboBox>();
         setUpGUI();
-
     }
-    public CafeSudokuGUI(){
+
+    public CafeSudokuGUI() {
 
         _numComponents = new Vector<JComboBox>();
         this._currentPuzzle = new SudokuPuzzle();
@@ -44,7 +44,7 @@ public class CafeSudokuGUI{
 
     }
 
-    private void setUpGUI(){
+    private void setUpGUI() {
         JFrame mainFrame = new JFrame("Café Sudoku");
 
         //TODO:Set up Menu
@@ -67,7 +67,7 @@ public class CafeSudokuGUI{
         JMenuItem newPuzzle = new JMenuItem("New");
         newPuzzle.setMnemonic(78);
         newPuzzle.setAccelerator(KeyStroke.getKeyStroke('N', 2));
-        newPuzzle.addActionListener(new ActionListener(){
+        newPuzzle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {newPuzzle();}
         });
         fileMenu.add(newPuzzle);
@@ -75,7 +75,7 @@ public class CafeSudokuGUI{
         JMenuItem open = new JMenuItem("Open...");
         open.setMnemonic(111);
         open.setAccelerator(KeyStroke.getKeyStroke('O', 2));
-        open.addActionListener(new ActionListener(){
+        open.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {openFile();}
         });
         fileMenu.add(open);
@@ -84,30 +84,30 @@ public class CafeSudokuGUI{
         JMenuItem save = new JMenuItem("Save");
         save.setMnemonic(83);
         save.setAccelerator(KeyStroke.getKeyStroke('S', 2));
-        save.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){savePuzzle();}
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {savePuzzle();}
         });
         fileMenu.add(save);
 
         JMenuItem saveAs = new JMenuItem("Save As...");
         saveAs.setMnemonic(65);
-        saveAs.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){saveAsPuzzle();}
+        saveAs.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {saveAsPuzzle();}
         });
         fileMenu.add(saveAs);
         fileMenu.add(new JSeparator());
 
         JMenuItem exit = new JMenuItem("Exit");
         exit.setMnemonic(69);
-        exit.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){cleanUpandQuit();}
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {cleanUpandQuit();}
         });
         fileMenu.add(exit);
 
         JMenuItem solve = new JMenuItem("Solve");
         solve.setMnemonic(108);
-        solve.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        solve.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 _currentPuzzle.setKeepSolving(true);
                 _currentPuzzle.solve();
             }
@@ -116,9 +116,9 @@ public class CafeSudokuGUI{
 
         JMenuItem validate = new JMenuItem("Validate");
         validate.setMnemonic(86);
-        validate.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                if(!_currentPuzzle.isValid()){
+        validate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(!_currentPuzzle.isValid()) {
                     //TODO:Update to mention they are highlighted, once implemented
                     displayErrorMessage("This Puzzle is not valid.\nThe first conflict found is highlighted.");
                 }
@@ -129,8 +129,8 @@ public class CafeSudokuGUI{
         //Preference menu in here, but doesn't actually do anything yet.
         JMenuItem prefs = new JMenuItem("Preferences");
         prefs.setMnemonic(80);
-        prefs.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        prefs.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 displayPrefs();
             }
         });
@@ -139,7 +139,7 @@ public class CafeSudokuGUI{
         JMenuItem contents = new JMenuItem("Contents");
         contents.setMnemonic(67);
         helpMenu.add(contents);
-        contents.addActionListener(new ActionListener(){
+        contents.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {displayHelpWindow();}
         });
 
@@ -154,17 +154,17 @@ public class CafeSudokuGUI{
         JButton solveBtn = new JButton("Solve");
         JButton validBtn = new JButton("Validate");
 
-        openBtn.addActionListener(new ActionListener(){
+        openBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {openFile();}
         });
-        solveBtn.addActionListener(new ActionListener(){
+        solveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 _currentPuzzle.setKeepSolving(true);
                 _currentPuzzle.solve();}
         });
-        validBtn.addActionListener(new ActionListener(){
+        validBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(!_currentPuzzle.isValid()){
+                if(!_currentPuzzle.isValid()) {
                     displayErrorMessage("This Puzzle is not valid.\nThe first conflict found is highlighted.");
                 }
             }
@@ -186,34 +186,34 @@ public class CafeSudokuGUI{
 
         Vector<Integer> possValues = new Vector<Integer>();
 
-        for (int i=0; i<10; ++i){
+        for (int i=0; i<10; ++i) {
             possValues.add(i);
         }
 
         //TODO: Add Cell's JComboBox to GUI here, check Cells row and column for border
-        for (int i=0; i < this._currentPuzzle.get_numCells(); ++i){
+        for (int i=0; i < this._currentPuzzle.get_numCells(); ++i) {
             Cell a = this._currentPuzzle.get_puzzleCell(i);
 
             Integer row = this._currentPuzzle.get_puzzleCell(i).get_rownum();
             Integer col = this._currentPuzzle.get_puzzleCell(i).get_colnum();
 
             puzzlePanel.add(a.get_comboBox());
-            /*if (col % 3 == 2 && row % 3 == 2){
+            /*if (col % 3 == 2 && row % 3 == 2) {
               puzzlePanel.add(Box.createVerticalStrut(30));
               }*/
-            if (col % 3 == 2 && col < 7){
+            if (col % 3 == 2 && col < 7) {
                 puzzlePanel.add(Box.createRigidArea(new Dimension(1,1)));
             }
-            if (row %3 == 2 && col == 8 && row < 7){
-                for (int k =0; k<11; ++k){
+            if (row %3 == 2 && col == 8 && row < 7) {
+                for (int k =0; k<11; ++k) {
                     puzzlePanel.add(Box.createRigidArea(new Dimension(1,1)));
                 }
             }
         }
 
         /*
-           for(int i = 0; i < 9; ++i){
-           for(int j=0; j<9; ++j){
+           for(int i = 0; i < 9; ++i) {
+           for(int j=0; j<9; ++j) {
         //% commands are being used for setting up borders
         JButton a = new JButton(new Integer(i%3).toString() + ", " + new Integer(j%3).toString());
         //a.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -236,14 +236,14 @@ public class CafeSudokuGUI{
 
     }
 
-    private static void displayHelpWindow(){
+    private static void displayHelpWindow() {
         JDialog helpFrame = new JDialog();
         JEditorPane editorPane = new JEditorPane();
 
         Dimension helpSize = new Dimension(400,440);
 
         editorPane.setContentType( "text/html" );
-        editorPane.addHyperlinkListener(new HyperlinkListener(){
+        editorPane.addHyperlinkListener(new HyperlinkListener() {
             public void hyperlinkUpdate(HyperlinkEvent e) { if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                 JEditorPane pane = (JEditorPane)e.getSource();
                 try {
@@ -255,8 +255,7 @@ public class CafeSudokuGUI{
         });
         editorPane.setEditable(false);
 
-
-        try{
+        try {
 
             //Generate Path to File, append index of help Docs.
             File f = new File("");
@@ -266,7 +265,7 @@ public class CafeSudokuGUI{
             editorPane.setPage(pwd);
             //editorPane.setPage("http://www.pages.drexel.edu/~mjg722/startpage.html");
         }
-        catch (IOException e){
+        catch (IOException e) {
             displayErrorMessage("Error loading help!");
         }
         //Put it in a scrollPane
@@ -289,7 +288,7 @@ public class CafeSudokuGUI{
 
     }
 
-    public void displayPrefs(){
+    public void displayPrefs() {
         //Not implemented yet, show basic error explaining what will be added.
         //JDialog prefs = new JDialog();
         //prefs.setTitle("Preferences");
@@ -302,7 +301,7 @@ public class CafeSudokuGUI{
         //JButton
     }
 
-    public static String displayStepSolve(Integer guess){
+    public static String displayStepSolve(Integer guess) {
 
         String message = "Removing possible value " + guess;
 
@@ -315,15 +314,15 @@ public class CafeSudokuGUI{
                 null,
                 options, options[0]);
 
-        if(n == JOptionPane.YES_OPTION){
+        if(n == JOptionPane.YES_OPTION) {
             //Keep on stepping
             return "YES";
         }
-        if(n == JOptionPane.NO_OPTION){
+        if(n == JOptionPane.NO_OPTION) {
             //Stop stepping, go solve
             return "NO";
         }
-        if(n == JOptionPane.CANCEL_OPTION){
+        if(n == JOptionPane.CANCEL_OPTION) {
             //TODO: Figure out way to abort solve from here
             //Stop stepping
             System.out.println("CANCEL");
@@ -333,41 +332,41 @@ public class CafeSudokuGUI{
         return "YES";
     }
 
-    public static void displayErrorMessage(String message){
+    public static void displayErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 
-    private void updateFields(int cellNumber, int val){
+    private void updateFields(int cellNumber, int val) {
         //Set requested button value to value being passed in.
         //_numComponents.get(cellNumber).setText(new Integer(val).toString());
         _numComponents.get(cellNumber).setSelectedIndex(val);
     }
 
-    public void syncPuzzleGUI(SudokuPuzzle puzzle){
-        for(int i = 0; i<81; ++i){
+    public void syncPuzzleGUI(SudokuPuzzle puzzle) {
+        for(int i = 0; i<81; ++i) {
             this.updateFields(i, puzzle.get_puzzleCell(i).get_finalval());
 
         }
     }
 
-    public void newPuzzle(){
+    public void newPuzzle() {
         //TODO:Check if puzzle is blank
         //TODO:If it isn't prompt to save
     }
 
-    public void saveAsPuzzle(){
+    public void saveAsPuzzle() {
         JDialog fileDialog = new JDialog();
 
         final JFileChooser fc = new JFileChooser();
         int returnVal = fc.showSaveDialog(fileDialog);
-        if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
+        if (returnVal == JFileChooser.APPROVE_OPTION) {//handle file
             //System.out.println("File chosen");
             File chosenFile = fc.getSelectedFile();
-            if (!chosenFile.canRead()){
+            if (!chosenFile.canRead()) {
                 //Throw can't read error, return
             }
-            else{
+            else {
                 //System.out.println("File not chosen");
             }
 
@@ -375,23 +374,21 @@ public class CafeSudokuGUI{
             //WriteFile
             this.writeFile(chosenFile.getAbsolutePath());
             this._currentPuzzle.set_filename(chosenFile.getAbsolutePath());
-
-
         }
     }
 
-    public void savePuzzle(){
-        if(this._currentPuzzle.get_filename().equals("")){
+    public void savePuzzle() {
+        if(this._currentPuzzle.get_filename().equals("")) {
             saveAsPuzzle();
         }
-        else{
+        else {
             File file = new File(this._currentPuzzle.get_filename());
             file.delete();
             this.writeFile(this._currentPuzzle.get_filename());
         }
     }
 
-    public void openFile(){
+    public void openFile() {
 
         //TODO:Reset puzzle to be able to load in a new one without problems
         //this._currentPuzzle.reset();
@@ -400,16 +397,15 @@ public class CafeSudokuGUI{
     }
 
     //TODO: Change this back to private
-    public void handleFile(){
-
+    public void handleFile() {
         JDialog fileDialog = new JDialog();
 
         final JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(fileDialog);
-        if (returnVal == JFileChooser.APPROVE_OPTION){//handle file
+        if (returnVal == JFileChooser.APPROVE_OPTION) {//handle file
             //System.out.println("File chosen");
             File chosenFile = fc.getSelectedFile();
-            if (!chosenFile.canRead()){
+            if (!chosenFile.canRead()) {
                 displayErrorMessage("Can't read file.\nMake sure the selected file is readable");
                 //Throw can't read error, return
             }
@@ -418,22 +414,20 @@ public class CafeSudokuGUI{
             //Read in File
             this.readFile(chosenFile.getAbsolutePath());
 
-
-        }
-        else{
+        } else {
             //System.out.println("File not chosen");
         }
     }
 
-    private void readFile(String filename){
+    private void readFile(String filename) {
         //Watches file input validity, stops if messed up
         boolean stillGoodInput = true;
-        try{
+        try {
             FileReader fin = new FileReader(filename);
             BufferedReader in = new BufferedReader(fin);
             Integer currentRow = 0;
 
-            while (in.ready() && currentRow < 9 && stillGoodInput){
+            while (in.ready() && currentRow < 9 && stillGoodInput) {
                 String text = in.readLine();
                 stillGoodInput = _currentPuzzle.parseInputLine(text, currentRow);
 
@@ -443,63 +437,63 @@ public class CafeSudokuGUI{
             in.close();
             fin.close();
         }
-        catch (Exception e){
+        catch (Exception e) {
             displayErrorMessage("Error reading file.");
         }
 
     }
 
-    private void writeFile(String filename){
+    private void writeFile(String filename) {
         //Get puzzle to output row by row and write it
-        try{
-            if(!filename.toLowerCase().endsWith(".txt")){
+        try {
+            if(!filename.toLowerCase().endsWith(".txt")) {
                 filename = filename + ".txt";
             }
             BufferedWriter fout = new BufferedWriter(new FileWriter(filename));
             String toWrite = "";
-            for (int i=0; i<9;++i){
+            for (int i=0; i<9;++i) {
                 toWrite = this._currentPuzzle.get_rowOutput(i);
                 fout.write(toWrite);
             }
 
             fout.close();
         }
-        catch(IOException e){
+        catch(IOException e) {
             displayErrorMessage("Error writing to file.\nMake sure you can write to the file.");
         }
-
     }
 
-    private void cleanUpandQuit(){
+    private void cleanUpandQuit() {
         //Check if puzzle needs to be saved
         String message = "Puzzle not saved.\nSave Now?";
         Object options[] = {"Save","Don't Save","Cancel"};
-        if(this._currentPuzzle.get_filename().equals("")){
+        if(this._currentPuzzle.get_filename().equals("")) {
             int n = JOptionPane.showOptionDialog(null, message, "Step Solve",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    null,
-                    options, options[0]);
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        options, options[0]);
 
-            if(n == JOptionPane.YES_OPTION){
+            if(n == JOptionPane.YES_OPTION) {
                 //Save
                 saveAsPuzzle();
             }
-            if(n == JOptionPane.NO_OPTION){
+            if(n == JOptionPane.NO_OPTION) {
                 //Exit without saving
                 System.exit(0);
             }
-            if(n == JOptionPane.CANCEL_OPTION){
+            if(n == JOptionPane.CANCEL_OPTION) {
                 //Cancel, go  back to program
                 return;
             }
         }
     }
 
-    public SudokuPuzzle get_currentPuzzle(){
+    public SudokuPuzzle get_currentPuzzle() {
         return _currentPuzzle;
     }
-    public void set_currentPuzzle(SudokuPuzzle x){
+
+    public void set_currentPuzzle(SudokuPuzzle x) {
         this._currentPuzzle = x;
         return;
     }
